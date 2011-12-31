@@ -168,7 +168,7 @@
     NSLog(@"%@",rrr);
     
     
-    NSURL *url = [NSURL URLWithString:@"http://lindayaaa.appspot.com/ggm3"];
+    NSURL *url = [NSURL URLWithString:@"http://sharemyweather.appspot.com/download"];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request startSynchronous];
     NSError *error = [request error];
@@ -178,9 +178,10 @@
         id result = [response objectFromJSONString];        
         if ([result isKindOfClass:[NSArray class]]) {
             NSArray *array = [response objectFromJSONString];        
-            NSDictionary *dict = [array objectAtIndex:3];
-            NSString *name = [dict objectForKey:@"name"];
-            NSString *column = [dict objectForKey:@"column"];
+            NSDictionary *dict = [array objectAtIndex:0];
+            NSString *lat = [dict objectForKey:@"lat"];
+            NSString *lng = [dict objectForKey:@"lng"];
+            
         
             NSLog(@"%@ %@", name, column);
             

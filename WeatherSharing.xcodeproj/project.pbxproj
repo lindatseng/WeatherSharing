@@ -36,11 +36,11 @@
 		BFDAB83814AF19E0009BDCAC /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB82E14AF19E0009BDCAC /* ASIInputStream.m */; };
 		BFDAB83914AF19E0009BDCAC /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB83014AF19E0009BDCAC /* ASINetworkQueue.m */; };
 		BFDAB83B14AF19EF009BDCAC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDAB83A14AF19EF009BDCAC /* CFNetwork.framework */; };
-		BFDAB83E14AF1A07009BDCAC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB83D14AF1A07009BDCAC /* Reachability.m */; };
-		BFDAB84114AF1A3A009BDCAC /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB84014AF1A3A009BDCAC /* ReachabilityAppDelegate.m */; };
 		BFDAB84314AF29D0009BDCAC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDAB84214AF29D0009BDCAC /* MobileCoreServices.framework */; };
 		BFDAB84514AF2A3C009BDCAC /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDAB84414AF2A3C009BDCAC /* libxml2.dylib */; };
 		BFDAB84714AF2B4B009BDCAC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDAB84614AF2B4B009BDCAC /* SystemConfiguration.framework */; };
+		BFDAB84C14AF655D009BDCAC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB84914AF655D009BDCAC /* Reachability.m */; };
+		BFDAB84D14AF655D009BDCAC /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB84B14AF655D009BDCAC /* ReachabilityAppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,13 +94,13 @@
 		BFDAB83014AF19E0009BDCAC /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
 		BFDAB83114AF19E0009BDCAC /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
 		BFDAB83A14AF19EF009BDCAC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		BFDAB83C14AF1A07009BDCAC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../../../Downloads/Reachability/Classes/Reachability.h; sourceTree = "<group>"; };
-		BFDAB83D14AF1A07009BDCAC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../../../Downloads/Reachability/Classes/Reachability.m; sourceTree = "<group>"; };
-		BFDAB83F14AF1A3A009BDCAC /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
-		BFDAB84014AF1A3A009BDCAC /* ReachabilityAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityAppDelegate.m; sourceTree = "<group>"; };
 		BFDAB84214AF29D0009BDCAC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BFDAB84414AF2A3C009BDCAC /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BFDAB84614AF2B4B009BDCAC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BFDAB84814AF655D009BDCAC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		BFDAB84914AF655D009BDCAC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		BFDAB84A14AF655D009BDCAC /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
+		BFDAB84B14AF655D009BDCAC /* ReachabilityAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityAppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,10 +235,10 @@
 				BFDAB82F14AF19E0009BDCAC /* ASINetworkQueue.h */,
 				BFDAB83014AF19E0009BDCAC /* ASINetworkQueue.m */,
 				BFDAB83114AF19E0009BDCAC /* ASIProgressDelegate.h */,
-				BFDAB83C14AF1A07009BDCAC /* Reachability.h */,
-				BFDAB83D14AF1A07009BDCAC /* Reachability.m */,
-				BFDAB83F14AF1A3A009BDCAC /* ReachabilityAppDelegate.h */,
-				BFDAB84014AF1A3A009BDCAC /* ReachabilityAppDelegate.m */,
+				BFDAB84814AF655D009BDCAC /* Reachability.h */,
+				BFDAB84914AF655D009BDCAC /* Reachability.m */,
+				BFDAB84A14AF655D009BDCAC /* ReachabilityAppDelegate.h */,
+				BFDAB84B14AF655D009BDCAC /* ReachabilityAppDelegate.m */,
 			);
 			name = ASIHTTPRequest;
 			sourceTree = "<group>";
@@ -326,8 +326,8 @@
 				BFDAB83714AF19E0009BDCAC /* ASIHTTPRequest.m in Sources */,
 				BFDAB83814AF19E0009BDCAC /* ASIInputStream.m in Sources */,
 				BFDAB83914AF19E0009BDCAC /* ASINetworkQueue.m in Sources */,
-				BFDAB83E14AF1A07009BDCAC /* Reachability.m in Sources */,
-				BFDAB84114AF1A3A009BDCAC /* ReachabilityAppDelegate.m in Sources */,
+				BFDAB84C14AF655D009BDCAC /* Reachability.m in Sources */,
+				BFDAB84D14AF655D009BDCAC /* ReachabilityAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
