@@ -10,6 +10,7 @@
 #import "Annotation.h"
 #import "JSONKit.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 #define METERS_PER_MILE 1609.344
 
 
@@ -153,6 +154,19 @@
     // 4
     [_mapView setRegion:adjustedRegion animated:YES];       
     _mapView.mapType = MKMapTypeStandard;
+    
+    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
+    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
+    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+    [uploadrequest setPostValue:udid forKey:@"iosUID"];
+    [uploadrequest setPostValue:@"23.5" forKey:@"lat"];
+    [uploadrequest setPostValue:@"121.0" forKey:@"lng"];
+    [uploadrequest setPostValue:@"14" forKey:@"temper"];
+    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
+    [uploadrequest startSynchronous];
+    NSString *rrr = [uploadrequest responseString];
+    NSLog(@"%@",rrr);
+    
     
     NSURL *url = [NSURL URLWithString:@"http://lindayaaa.appspot.com/ggm3"];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
