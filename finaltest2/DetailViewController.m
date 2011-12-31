@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "Annotation.h"
 #define METERS_PER_MILE 1609.344
 
 
@@ -150,6 +151,14 @@
     // 4
     [_mapView setRegion:adjustedRegion animated:YES];       
     _mapView.mapType = MKMapTypeStandard;
+    
+    CLLocationCoordinate2D location0 = {25.044423,121.52673};
+    Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:@"title1" subTitle:@"subtitle1" andCoordinate:location0];
+    CLLocationCoordinate2D location1 = {25.04411,121.52534};
+    Annotation *myAnnotation1 = [[Annotation alloc] initWithTitle:@"遠東國際商業銀行"
+                                                         subTitle:@"電話：02-2327-8898"
+                                                    andCoordinate:location1];
+    [_mapView addAnnotations:[NSArray arrayWithObjects:myAnnotation0, myAnnotation1, nil]];
     
 }
 
