@@ -25,6 +25,7 @@
 		BFDAB76F14AED753009BDCAC /* apple_ex.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB76C14AED753009BDCAC /* apple_ex.png */; };
 		BFDAB77014AED753009BDCAC /* pic123.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB76D14AED753009BDCAC /* pic123.png */; };
 		BFDAB77314AED961009BDCAC /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB77214AED961009BDCAC /* Annotation.m */; };
+		BFDAB77614AF07B9009BDCAC /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB77514AF07B9009BDCAC /* JSONKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,8 @@
 		BFDAB76D14AED753009BDCAC /* pic123.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic123.png; sourceTree = "<group>"; };
 		BFDAB77114AED961009BDCAC /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
 		BFDAB77214AED961009BDCAC /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
+		BFDAB77414AF07B9009BDCAC /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		BFDAB77514AF07B9009BDCAC /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 				843AD09E14AB0CDE00CD54CA /* MasterViewController_iPad.xib */,
 				843AD0A114AB0CDE00CD54CA /* DetailViewController_iPhone.xib */,
 				843AD0A414AB0CDE00CD54CA /* DetailViewController_iPad.xib */,
+				BFDAB77414AF07B9009BDCAC /* JSONKit.h */,
+				BFDAB77514AF07B9009BDCAC /* JSONKit.m */,
 				843AD08A14AB0CDE00CD54CA /* Supporting Files */,
 				BFDAB77114AED961009BDCAC /* Annotation.h */,
 				BFDAB77214AED961009BDCAC /* Annotation.m */,
@@ -224,6 +229,7 @@
 				843AD09714AB0CDE00CD54CA /* MasterViewController.m in Sources */,
 				843AD09A14AB0CDE00CD54CA /* DetailViewController.m in Sources */,
 				BFDAB77314AED961009BDCAC /* Annotation.m in Sources */,
+				BFDAB77614AF07B9009BDCAC /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
