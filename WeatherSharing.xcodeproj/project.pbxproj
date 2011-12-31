@@ -20,21 +20,21 @@
 		843AD0A314AB0CDE00CD54CA /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0A114AB0CDE00CD54CA /* DetailViewController_iPhone.xib */; };
 		843AD0A614AB0CDE00CD54CA /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0A414AB0CDE00CD54CA /* DetailViewController_iPad.xib */; };
 		843AD0B714AB46B600CD54CA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD0B614AB46B600CD54CA /* CoreLocation.framework */; };
-		843AD0BD14AB4C8500CD54CA /* apple_ex.png in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0BC14AB4C8400CD54CA /* apple_ex.png */; };
-		843AD0BF14AB4C9600CD54CA /* pic123.png in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0BE14AB4C9600CD54CA /* pic123.png */; };
-		843AD16B14ADE64500CD54CA /* abc_blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 843AD16A14ADE64400CD54CA /* abc_blocks.png */; };
 		843AD19314ADF8D400CD54CA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD19214ADF8D400CD54CA /* MapKit.framework */; };
+		BFDAB76E14AED753009BDCAC /* abc_blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB76B14AED753009BDCAC /* abc_blocks.png */; };
+		BFDAB76F14AED753009BDCAC /* apple_ex.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB76C14AED753009BDCAC /* apple_ex.png */; };
+		BFDAB77014AED753009BDCAC /* pic123.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB76D14AED753009BDCAC /* pic123.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		843AD07F14AB0CDE00CD54CA /* WeatherSharing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSharing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		843AD07F14AB0CDE00CD54CA /* UserWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843AD08314AB0CDE00CD54CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		843AD08514AB0CDE00CD54CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		843AD08714AB0CDE00CD54CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		843AD08B14AB0CDE00CD54CA /* WeatherSharing-Info.plist */ = {isa = PBXFileReference; path = "WeatherSharing-Info.plist"; sourceTree = "<group>"; };
+		843AD08B14AB0CDE00CD54CA /* WeatherSharing-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WeatherSharing-Info.plist"; sourceTree = "<group>"; };
 		843AD08D14AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		843AD08F14AB0CDE00CD54CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		843AD09114AB0CDE00CD54CA /* WeatherSharing-Prefix.pch */ = {isa = PBXFileReference; path = "WeatherSharing-Prefix.pch"; sourceTree = "<group>"; };
+		843AD09114AB0CDE00CD54CA /* WeatherSharing-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeatherSharing-Prefix.pch"; sourceTree = "<group>"; };
 		843AD09214AB0CDE00CD54CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		843AD09314AB0CDE00CD54CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		843AD09514AB0CDE00CD54CA /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
@@ -46,10 +46,10 @@
 		843AD0A214AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		843AD0A514AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
 		843AD0B614AB46B600CD54CA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		843AD0BC14AB4C8400CD54CA /* apple_ex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = apple_ex.png; path = ../../../Downloads/apple_ex.png; sourceTree = "<group>"; };
-		843AD0BE14AB4C9600CD54CA /* pic123.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pic123.png; path = ../../../Downloads/pic123.png; sourceTree = "<group>"; };
-		843AD16A14ADE64400CD54CA /* abc_blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = abc_blocks.png; path = ../../../Pictures/abc_blocks.png; sourceTree = "<group>"; };
 		843AD19214ADF8D400CD54CA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		BFDAB76B14AED753009BDCAC /* abc_blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abc_blocks.png; sourceTree = "<group>"; };
+		BFDAB76C14AED753009BDCAC /* apple_ex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple_ex.png; sourceTree = "<group>"; };
+		BFDAB76D14AED753009BDCAC /* pic123.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic123.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				843AD08914AB0CDE00CD54CA /* finaltest2 */,
+				BFDAB76914AED753009BDCAC /* resource */,
 				843AD08214AB0CDE00CD54CA /* Frameworks */,
 				843AD08014AB0CDE00CD54CA /* Products */,
 			);
@@ -80,7 +81,7 @@
 		843AD08014AB0CDE00CD54CA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				843AD07F14AB0CDE00CD54CA /* WeatherSharing.app */,
+				843AD07F14AB0CDE00CD54CA /* UserWeather.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,9 +101,6 @@
 		843AD08914AB0CDE00CD54CA /* finaltest2 */ = {
 			isa = PBXGroup;
 			children = (
-				843AD16A14ADE64400CD54CA /* abc_blocks.png */,
-				843AD0BE14AB4C9600CD54CA /* pic123.png */,
-				843AD0BC14AB4C8400CD54CA /* apple_ex.png */,
 				843AD09214AB0CDE00CD54CA /* AppDelegate.h */,
 				843AD09314AB0CDE00CD54CA /* AppDelegate.m */,
 				843AD09514AB0CDE00CD54CA /* MasterViewController.h */,
@@ -129,6 +127,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BFDAB76914AED753009BDCAC /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				BFDAB76A14AED753009BDCAC /* temp */,
+			);
+			name = resource;
+			path = finaltest2/resource;
+			sourceTree = "<group>";
+		};
+		BFDAB76A14AED753009BDCAC /* temp */ = {
+			isa = PBXGroup;
+			children = (
+				BFDAB76B14AED753009BDCAC /* abc_blocks.png */,
+				BFDAB76C14AED753009BDCAC /* apple_ex.png */,
+				BFDAB76D14AED753009BDCAC /* pic123.png */,
+			);
+			path = temp;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,7 +163,7 @@
 			);
 			name = WeatherSharing;
 			productName = finaltest2;
-			productReference = 843AD07F14AB0CDE00CD54CA /* WeatherSharing.app */;
+			productReference = 843AD07F14AB0CDE00CD54CA /* UserWeather.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -184,9 +201,9 @@
 				843AD0A014AB0CDE00CD54CA /* MasterViewController_iPad.xib in Resources */,
 				843AD0A314AB0CDE00CD54CA /* DetailViewController_iPhone.xib in Resources */,
 				843AD0A614AB0CDE00CD54CA /* DetailViewController_iPad.xib in Resources */,
-				843AD0BD14AB4C8500CD54CA /* apple_ex.png in Resources */,
-				843AD0BF14AB4C9600CD54CA /* pic123.png in Resources */,
-				843AD16B14ADE64500CD54CA /* abc_blocks.png in Resources */,
+				BFDAB76E14AED753009BDCAC /* abc_blocks.png in Resources */,
+				BFDAB76F14AED753009BDCAC /* apple_ex.png in Resources */,
+				BFDAB77014AED753009BDCAC /* pic123.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,7 +319,7 @@
 				GCC_PREFIX_HEADER = "finaltest2/WeatherSharing-Prefix.pch";
 				INFOPLIST_FILE = "finaltest2/WeatherSharing-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = WeatherSharing;
+				PRODUCT_NAME = UserWeather;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -314,7 +331,7 @@
 				GCC_PREFIX_HEADER = "finaltest2/WeatherSharing-Prefix.pch";
 				INFOPLIST_FILE = "finaltest2/WeatherSharing-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = WeatherSharing;
+				PRODUCT_NAME = UserWeather;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
