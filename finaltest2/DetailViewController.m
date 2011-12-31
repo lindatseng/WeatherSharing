@@ -94,13 +94,16 @@
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation
 {
+    mylat = newLocation.coordinate.latitude;
     int degrees = newLocation.coordinate.latitude;
+    NSLog(@"%lf", newLocation.coordinate.latitude);
     double decimal = fabs(newLocation.coordinate.latitude - degrees);
     int minutes = decimal * 60;
     double seconds = decimal * 3600 - minutes * 60;
     NSString *lat = [NSString stringWithFormat:@"%d° %d' %1.4f\"", 
                      degrees, minutes, seconds];
     latLabel.text = lat;
+    mylng = newLocation.coordinate.longitude;
     degrees = newLocation.coordinate.longitude;
     decimal = fabs(newLocation.coordinate.longitude - degrees);
     minutes = decimal * 60;
@@ -110,6 +113,8 @@
     longLabel.text = longt;
     NSString *testtext = [NSString stringWithFormat:@"%d23456",2];
     testLabel.text = testtext;
+    
+    [self uploadData];
     
    /* UIImage *redButtonImage = [UIImage imageNamed:@"pic123.png"];
     
@@ -155,17 +160,7 @@
     [_mapView setRegion:adjustedRegion animated:YES];       
     _mapView.mapType = MKMapTypeStandard;
     
-    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
-    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
-    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
-    [uploadrequest setPostValue:udid forKey:@"iosUID"];
-    [uploadrequest setPostValue:@"23.5" forKey:@"lat"];
-    [uploadrequest setPostValue:@"121.0" forKey:@"lng"];
-    [uploadrequest setPostValue:@"14" forKey:@"temper"];
-    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
-    [uploadrequest startSynchronous];
-    NSString *rrr = [uploadrequest responseString];
-    NSLog(@"%@",rrr);
+    
     
     
     NSURL *url = [NSURL URLWithString:@"http://sharemyweather.appspot.com/download"];
@@ -179,11 +174,18 @@
         if ([result isKindOfClass:[NSArray class]]) {
             NSArray *array = [response objectFromJSONString];        
             NSDictionary *dict = [array objectAtIndex:0];
-            NSString *lat = [dict objectForKey:@"lat"];
-            NSString *lng = [dict objectForKey:@"lng"];
+            NSString *_lat = [dict objectForKey:@"lat"];
+            NSString *_lng = [dict objectForKey:@"lng"];
+            NSString *_temper = [dict objectForKey:@"temper"];
+            NSString *_weatherType = [dict objectForKey:@"weatherType"];
+            
+            float lat = [_lat floatValue];
+            float lng = [_lng floatValue];
+            int temper = [_temper intValue];
+            int weatherType = [_weatherType intValue];
             
         
-            NSLog(@"%@ %@", name, column);
+            NSLog(@"%f %f", lat, lng);
             
         }
         else {
@@ -204,6 +206,21 @@
                                                     andCoordinate:location1];
     [_mapView addAnnotations:[NSArray arrayWithObjects:myAnnotation0, myAnnotation1, nil]];
     
+}
+
+- (void) uploadData
+{
+    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
+    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
+    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+    [uploadrequest setPostValue:udid forKey:@"iosUID"];
+    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylat] forKey:@"lat"];
+    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylng] forKey:@"lng"];
+    [uploadrequest setPostValue:@"14" forKey:@"temper"];
+    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
+    [uploadrequest startSynchronous];
+    NSString *rrr = [uploadrequest responseString];
+    NSLog(@"%@",rrr);
 }
 
 - (void)viewDidAppear:(BOOL)animated

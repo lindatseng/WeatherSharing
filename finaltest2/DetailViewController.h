@@ -16,6 +16,8 @@
     IBOutlet UILabel *latLabel;
     IBOutlet UILabel *longLabel;
     IBOutlet UILabel *testLabel;
+    float mylat;
+    float mylng;
     BOOL _doneInitialZoom;
     MKMapView *_mapView;
   //  IBOutlet UIButton *testButton;
@@ -28,4 +30,5 @@
 @property (nonatomic, retain) IBOutlet UIButton *changeButton;
 
 -(IBAction) changeClicked;
+-(void) uploadData;
 @end
