@@ -8,6 +8,8 @@
 
 #import "DetailViewController.h"
 #import "Annotation.h"
+#import "JSONKit.h"
+#import "ASIHTTPRequest.h"
 #define METERS_PER_MILE 1609.344
 
 
@@ -151,6 +153,33 @@
     // 4
     [_mapView setRegion:adjustedRegion animated:YES];       
     _mapView.mapType = MKMapTypeStandard;
+    
+    NSURL *url = [NSURL URLWithString:@"http://lindayaaa.appspot.com/ggm3"];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request startSynchronous];
+    NSError *error = [request error];
+    if (!error) {
+        NSString *response = [request responseString];
+        
+        id result = [response objectFromJSONString];        
+        if ([result isKindOfClass:[NSArray class]]) {
+            NSArray *array = [response objectFromJSONString];        
+            NSDictionary *dict = [array objectAtIndex:3];
+            NSString *name = [dict objectForKey:@"name"];
+            NSString *column = [dict objectForKey:@"column"];
+        
+            NSLog(@"%@ %@", name, column);
+            
+        }
+        else {
+            //TODO        
+        }
+        
+    
+    }
+    else {
+        //TODO
+    }
     
     CLLocationCoordinate2D location0 = {25.044423,121.52673};
     Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:@"title1" subTitle:@"subtitle1" andCoordinate:location0];
