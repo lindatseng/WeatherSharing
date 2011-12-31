@@ -1,0 +1,346 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		843AD08414AB0CDE00CD54CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08314AB0CDE00CD54CA /* UIKit.framework */; };
+		843AD08614AB0CDE00CD54CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08514AB0CDE00CD54CA /* Foundation.framework */; };
+		843AD08814AB0CDE00CD54CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08714AB0CDE00CD54CA /* CoreGraphics.framework */; };
+		843AD08E14AB0CDE00CD54CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 843AD08C14AB0CDE00CD54CA /* InfoPlist.strings */; };
+		843AD09014AB0CDE00CD54CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 843AD08F14AB0CDE00CD54CA /* main.m */; };
+		843AD09414AB0CDE00CD54CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 843AD09314AB0CDE00CD54CA /* AppDelegate.m */; };
+		843AD09714AB0CDE00CD54CA /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843AD09614AB0CDE00CD54CA /* MasterViewController.m */; };
+		843AD09A14AB0CDE00CD54CA /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843AD09914AB0CDE00CD54CA /* DetailViewController.m */; };
+		843AD09D14AB0CDE00CD54CA /* MasterViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843AD09B14AB0CDE00CD54CA /* MasterViewController_iPhone.xib */; };
+		843AD0A014AB0CDE00CD54CA /* MasterViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843AD09E14AB0CDE00CD54CA /* MasterViewController_iPad.xib */; };
+		843AD0A314AB0CDE00CD54CA /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0A114AB0CDE00CD54CA /* DetailViewController_iPhone.xib */; };
+		843AD0A614AB0CDE00CD54CA /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0A414AB0CDE00CD54CA /* DetailViewController_iPad.xib */; };
+		843AD0B714AB46B600CD54CA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD0B614AB46B600CD54CA /* CoreLocation.framework */; };
+		843AD0BD14AB4C8500CD54CA /* apple_ex.png in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0BC14AB4C8400CD54CA /* apple_ex.png */; };
+		843AD0BF14AB4C9600CD54CA /* pic123.png in Resources */ = {isa = PBXBuildFile; fileRef = 843AD0BE14AB4C9600CD54CA /* pic123.png */; };
+		843AD16B14ADE64500CD54CA /* abc_blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 843AD16A14ADE64400CD54CA /* abc_blocks.png */; };
+		843AD19314ADF8D400CD54CA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD19214ADF8D400CD54CA /* MapKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		843AD07F14AB0CDE00CD54CA /* WeatherSharing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSharing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		843AD08314AB0CDE00CD54CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		843AD08514AB0CDE00CD54CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		843AD08714AB0CDE00CD54CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		843AD08B14AB0CDE00CD54CA /* WeatherSharing-Info.plist */ = {isa = PBXFileReference; path = "WeatherSharing-Info.plist"; sourceTree = "<group>"; };
+		843AD08D14AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		843AD08F14AB0CDE00CD54CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		843AD09114AB0CDE00CD54CA /* WeatherSharing-Prefix.pch */ = {isa = PBXFileReference; path = "WeatherSharing-Prefix.pch"; sourceTree = "<group>"; };
+		843AD09214AB0CDE00CD54CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		843AD09314AB0CDE00CD54CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		843AD09514AB0CDE00CD54CA /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		843AD09614AB0CDE00CD54CA /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		843AD09814AB0CDE00CD54CA /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		843AD09914AB0CDE00CD54CA /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		843AD09C14AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPhone.xib; sourceTree = "<group>"; };
+		843AD09F14AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPad.xib; sourceTree = "<group>"; };
+		843AD0A214AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
+		843AD0A514AB0CDE00CD54CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
+		843AD0B614AB46B600CD54CA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		843AD0BC14AB4C8400CD54CA /* apple_ex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = apple_ex.png; path = ../../../Downloads/apple_ex.png; sourceTree = "<group>"; };
+		843AD0BE14AB4C9600CD54CA /* pic123.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pic123.png; path = ../../../Downloads/pic123.png; sourceTree = "<group>"; };
+		843AD16A14ADE64400CD54CA /* abc_blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = abc_blocks.png; path = ../../../Pictures/abc_blocks.png; sourceTree = "<group>"; };
+		843AD19214ADF8D400CD54CA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		843AD07C14AB0CDE00CD54CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843AD08414AB0CDE00CD54CA /* UIKit.framework in Frameworks */,
+				843AD08614AB0CDE00CD54CA /* Foundation.framework in Frameworks */,
+				843AD08814AB0CDE00CD54CA /* CoreGraphics.framework in Frameworks */,
+				843AD0B714AB46B600CD54CA /* CoreLocation.framework in Frameworks */,
+				843AD19314ADF8D400CD54CA /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		843AD07414AB0CDE00CD54CA = {
+			isa = PBXGroup;
+			children = (
+				843AD08914AB0CDE00CD54CA /* finaltest2 */,
+				843AD08214AB0CDE00CD54CA /* Frameworks */,
+				843AD08014AB0CDE00CD54CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		843AD08014AB0CDE00CD54CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				843AD07F14AB0CDE00CD54CA /* WeatherSharing.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		843AD08214AB0CDE00CD54CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				843AD19214ADF8D400CD54CA /* MapKit.framework */,
+				843AD0B614AB46B600CD54CA /* CoreLocation.framework */,
+				843AD08314AB0CDE00CD54CA /* UIKit.framework */,
+				843AD08514AB0CDE00CD54CA /* Foundation.framework */,
+				843AD08714AB0CDE00CD54CA /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		843AD08914AB0CDE00CD54CA /* finaltest2 */ = {
+			isa = PBXGroup;
+			children = (
+				843AD16A14ADE64400CD54CA /* abc_blocks.png */,
+				843AD0BE14AB4C9600CD54CA /* pic123.png */,
+				843AD0BC14AB4C8400CD54CA /* apple_ex.png */,
+				843AD09214AB0CDE00CD54CA /* AppDelegate.h */,
+				843AD09314AB0CDE00CD54CA /* AppDelegate.m */,
+				843AD09514AB0CDE00CD54CA /* MasterViewController.h */,
+				843AD09614AB0CDE00CD54CA /* MasterViewController.m */,
+				843AD09814AB0CDE00CD54CA /* DetailViewController.h */,
+				843AD09914AB0CDE00CD54CA /* DetailViewController.m */,
+				843AD09B14AB0CDE00CD54CA /* MasterViewController_iPhone.xib */,
+				843AD09E14AB0CDE00CD54CA /* MasterViewController_iPad.xib */,
+				843AD0A114AB0CDE00CD54CA /* DetailViewController_iPhone.xib */,
+				843AD0A414AB0CDE00CD54CA /* DetailViewController_iPad.xib */,
+				843AD08A14AB0CDE00CD54CA /* Supporting Files */,
+			);
+			path = finaltest2;
+			sourceTree = "<group>";
+		};
+		843AD08A14AB0CDE00CD54CA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				843AD08B14AB0CDE00CD54CA /* WeatherSharing-Info.plist */,
+				843AD08C14AB0CDE00CD54CA /* InfoPlist.strings */,
+				843AD08F14AB0CDE00CD54CA /* main.m */,
+				843AD09114AB0CDE00CD54CA /* WeatherSharing-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		843AD07E14AB0CDE00CD54CA /* WeatherSharing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 843AD0A914AB0CDE00CD54CA /* Build configuration list for PBXNativeTarget "WeatherSharing" */;
+			buildPhases = (
+				843AD07B14AB0CDE00CD54CA /* Sources */,
+				843AD07C14AB0CDE00CD54CA /* Frameworks */,
+				843AD07D14AB0CDE00CD54CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WeatherSharing;
+			productName = finaltest2;
+			productReference = 843AD07F14AB0CDE00CD54CA /* WeatherSharing.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		843AD07614AB0CDE00CD54CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 843AD07914AB0CDE00CD54CA /* Build configuration list for PBXProject "WeatherSharing" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 843AD07414AB0CDE00CD54CA;
+			productRefGroup = 843AD08014AB0CDE00CD54CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				843AD07E14AB0CDE00CD54CA /* WeatherSharing */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		843AD07D14AB0CDE00CD54CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843AD08E14AB0CDE00CD54CA /* InfoPlist.strings in Resources */,
+				843AD09D14AB0CDE00CD54CA /* MasterViewController_iPhone.xib in Resources */,
+				843AD0A014AB0CDE00CD54CA /* MasterViewController_iPad.xib in Resources */,
+				843AD0A314AB0CDE00CD54CA /* DetailViewController_iPhone.xib in Resources */,
+				843AD0A614AB0CDE00CD54CA /* DetailViewController_iPad.xib in Resources */,
+				843AD0BD14AB4C8500CD54CA /* apple_ex.png in Resources */,
+				843AD0BF14AB4C9600CD54CA /* pic123.png in Resources */,
+				843AD16B14ADE64500CD54CA /* abc_blocks.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		843AD07B14AB0CDE00CD54CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843AD09014AB0CDE00CD54CA /* main.m in Sources */,
+				843AD09414AB0CDE00CD54CA /* AppDelegate.m in Sources */,
+				843AD09714AB0CDE00CD54CA /* MasterViewController.m in Sources */,
+				843AD09A14AB0CDE00CD54CA /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		843AD08C14AB0CDE00CD54CA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843AD08D14AB0CDE00CD54CA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		843AD09B14AB0CDE00CD54CA /* MasterViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843AD09C14AB0CDE00CD54CA /* en */,
+			);
+			name = MasterViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		843AD09E14AB0CDE00CD54CA /* MasterViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843AD09F14AB0CDE00CD54CA /* en */,
+			);
+			name = MasterViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		843AD0A114AB0CDE00CD54CA /* DetailViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843AD0A214AB0CDE00CD54CA /* en */,
+			);
+			name = DetailViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		843AD0A414AB0CDE00CD54CA /* DetailViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843AD0A514AB0CDE00CD54CA /* en */,
+			);
+			name = DetailViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		843AD0A714AB0CDE00CD54CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		843AD0A814AB0CDE00CD54CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		843AD0AA14AB0CDE00CD54CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "finaltest2/WeatherSharing-Prefix.pch";
+				INFOPLIST_FILE = "finaltest2/WeatherSharing-Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = WeatherSharing;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		843AD0AB14AB0CDE00CD54CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "finaltest2/WeatherSharing-Prefix.pch";
+				INFOPLIST_FILE = "finaltest2/WeatherSharing-Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = WeatherSharing;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		843AD07914AB0CDE00CD54CA /* Build configuration list for PBXProject "WeatherSharing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843AD0A714AB0CDE00CD54CA /* Debug */,
+				843AD0A814AB0CDE00CD54CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		843AD0A914AB0CDE00CD54CA /* Build configuration list for PBXNativeTarget "WeatherSharing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843AD0AA14AB0CDE00CD54CA /* Debug */,
+				843AD0AB14AB0CDE00CD54CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 843AD07614AB0CDE00CD54CA /* Project object */;
+}
