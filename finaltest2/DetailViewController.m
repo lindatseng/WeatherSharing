@@ -87,7 +87,18 @@
     NSString *testtext = [NSString stringWithFormat:@"%d23456",2];
     testLabel.text = testtext;
     
-    [self uploadData];
+    //[self uploadData];
+    
+    MKCoordinateRegion region;
+    region.center.latitude = mylat;
+    region.center.longitude = mylng;
+    MKCoordinateSpan span;
+    span.latitudeDelta = .002;
+    span.longitudeDelta = .002;
+    region.span = span;
+    
+    
+    [_mapView setRegion:region animated:YES];
     
    /* UIImage *redButtonImage = [UIImage imageNamed:@"pic123.png"];
     
@@ -114,8 +125,8 @@
     // 1
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     MKCoordinateRegion region;
-    region.center.latitude = 25.044;
-    region.center.longitude = 121.526;
+    region.center.latitude = 0;
+    region.center.longitude = 0;
     MKCoordinateSpan span;
     span.latitudeDelta = .002;
     span.longitudeDelta = .002;
