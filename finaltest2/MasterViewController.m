@@ -9,6 +9,10 @@
 #import "MasterViewController.h"
 
 #import "DetailViewController.h"
+#import "JSONKit.h"
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+
 
 @implementation MasterViewController
 
@@ -57,6 +61,14 @@
     [_testButton6 setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     _rainState = 0;
     _temperatureState = 0;
+    _getPosition = FALSE;
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+    [locationManager startUpdatingLocation];
+
 	// Do any additional setup after loading the view, typically from a nib.
     
 }
@@ -96,6 +108,45 @@
     } else {
         return YES;
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"123456");
+    mylat = newLocation.coordinate.latitude;
+    mylng = newLocation.coordinate.longitude;
+    _getPosition = TRUE;
+
+    
+    
+    /* UIImage *redButtonImage = [UIImage imageNamed:@"pic123.png"];
+     
+     UIButton *redButton = [UIButton buttonWithType:UIButtonTypeCustom];
+     redButton.frame = CGRectMake(280.0, 10.0, 29.0, 29.0);
+     [redButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
+     */
+    
+    // [[testButton layer] setCorner
+}
+
+
+- (void) uploadData
+{
+    NSLog(@"777");
+    NSLog(@"%f%f",mylat,mylng);
+    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
+    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
+    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+    [uploadrequest setPostValue:udid forKey:@"iosUID"];
+    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylat] forKey:@"lat"];
+    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylng] forKey:@"lng"];
+    [uploadrequest setPostValue:@"14" forKey:@"temper"];
+    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
+    [uploadrequest startSynchronous];
+    NSString *rrr = [uploadrequest responseString];
+    NSLog(@"%@",rrr);
 }
 
 -(IBAction)buttonClicked{
@@ -185,8 +236,44 @@
 
 -(IBAction)startClicked{
  
-    NSLog(@"123");
- 
+
+    NSLog(@"startClicked1");
+    [self uploadData];
+    
+    
+//    NSURL *url = [NSURL URLWithString:@"http://suitingweather.appspot.com/obs?location=46688&output=json"];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request startSynchronous];
+//    NSError *error = [request error];
+//    if (!error) {
+//         
+//        NSString *response = [request responseString];
+//        
+//        id result = [response objectFromJSONString];        
+//        if ([result isKindOfClass:[NSDictionary class]]) {
+//            NSLog(@"getdata");      
+//            NSDictionary *dict = [response objectFromJSONString];
+//            NSDictionary *_dictTwo = [dict objectForKey:@"result"];
+//            
+//            NSString *_time = [_dictTwo objectForKey:@"time"];
+//
+//           // float lat = [_lat floatValue];
+//            
+//            NSLog(@"%@",_time);
+//            
+//        }
+//        else {
+//             //TODO        
+//        }
+//        
+//        
+//    }
+//    else {
+//        //TODO
+//    }
+    
+    
+    
     if (!self.detailViewController) {
         self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
     }

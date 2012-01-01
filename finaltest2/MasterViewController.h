@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <CoreLocation/CoreLocation.h>
 @class DetailViewController;
 
-@interface MasterViewController : UIViewController{
+@interface MasterViewController : UIViewController<CLLocationManagerDelegate>{
 
+CLLocationManager *locationManager;
 IBOutlet UILabel *situationLabel;
     int _rainState;
     int _temperatureState;
+    
+    float mylat;
+    float mylng;
+    BOOL _getPosition;
 
 }
 
@@ -34,5 +39,5 @@ IBOutlet UILabel *situationLabel;
 -(IBAction) buttonClicked4;
 -(IBAction) buttonClicked5;
 -(IBAction) buttonClicked6;
-
+-(void) uploadData;
 @end

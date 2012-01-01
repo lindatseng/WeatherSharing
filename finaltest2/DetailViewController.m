@@ -114,7 +114,7 @@
     NSString *testtext = [NSString stringWithFormat:@"%d23456",2];
     testLabel.text = testtext;
     
-    [self uploadData];
+   // [self uploadData];
     
    /* UIImage *redButtonImage = [UIImage imageNamed:@"pic123.png"];
     
