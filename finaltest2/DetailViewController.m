@@ -22,7 +22,7 @@
 
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize mapView = _mapView;
-
+@synthesize obsInfo;
 - (void)dealloc
 {
     [_masterPopoverController release];
@@ -69,7 +69,7 @@
 {
     mylat = newLocation.coordinate.latitude;
     int degrees = newLocation.coordinate.latitude;
-    NSLog(@"%lf", newLocation.coordinate.latitude);
+    //NSLog(@"%lf", newLocation.coordinate.latitude);
     double decimal = fabs(newLocation.coordinate.latitude - degrees);
     int minutes = decimal * 60;
     double seconds = decimal * 3600 - minutes * 60;
@@ -99,7 +99,7 @@
     region.span = span;
     
     
-    [_mapView setRegion:region animated:YES];
+    //[_mapView setRegion:region animated:YES];
 
     
    /* UIImage *redButtonImage = [UIImage imageNamed:@"pic123.png"];
@@ -125,6 +125,9 @@
 {
     [super viewWillAppear:animated];
     // 1
+    
+    
+    
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     MKCoordinateRegion region;
     region.center.latitude = 0;
@@ -135,6 +138,18 @@
     region.span = span;
     [_mapView setRegion:region animated:YES];
     [self.view addSubview:_mapView];
+    NSMutableArray *annotation = [[NSMutableArray alloc]initWithCapacity:0];
+    for (NSUInteger i=0; i<[obsInfo count]; i++) {
+        float lat = [[[obsInfo objectAtIndex:i] objectForKey:@"lat"] floatValue];
+        float longt = [[[obsInfo objectAtIndex:i] objectForKey:@"longt"] floatValue];
+        NSString *name = [[obsInfo objectAtIndex:i] objectForKey:@"locationName"];
+        NSString *description = [[obsInfo objectAtIndex:i] objectForKey:@"description"];
+        CLLocationCoordinate2D location0 = {lat,longt};
+        Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:name subTitle:description andCoordinate:location0];
+        [annotation addObject:myAnnotation0];
+    }
+    _mapView.showsUserLocation = YES;
+    [_mapView addAnnotations:[NSArray arrayWithArray:annotation]];
     NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
     ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
     NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
@@ -145,7 +160,7 @@
     [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
     [uploadrequest startSynchronous];
     NSString *rrr = [uploadrequest responseString];
-    NSLog(@"%@",rrr);
+    //NSLog(@"%@",rrr);
     
     
     NSURL *url = [NSURL URLWithString:@"http://sharemyweather.appspot.com/download"];
@@ -183,13 +198,13 @@
         //TODO
     }
     
-    CLLocationCoordinate2D location0 = {25.044423,121.52673};
-    Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:@"title1" subTitle:@"subtitle1" andCoordinate:location0];
-    CLLocationCoordinate2D location1 = {25.04411,121.52534};
-    Annotation *myAnnotation1 = [[Annotation alloc] initWithTitle:@"遠東國際商業銀行"
-                                                         subTitle:@"電話：02-2327-8898"
-                                                    andCoordinate:location1];
-    [_mapView addAnnotations:[NSArray arrayWithObjects:myAnnotation0, myAnnotation1, nil]];
+//    CLLocationCoordinate2D location0 = {25.044423,121.52673};
+//    Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:@"title1" subTitle:@"subtitle1" andCoordinate:location0];
+//    CLLocationCoordinate2D location1 = {25.04411,121.52534};
+//    Annotation *myAnnotation1 = [[Annotation alloc] initWithTitle:@"遠東國際商業銀行"
+//                                                         subTitle:@"電話：02-2327-8898"
+//                                                    andCoordinate:location1];
+//    [_mapView addAnnotations:[NSArray arrayWithObjects:myAnnotation0, myAnnotation1, nil]];
     
 }
 
@@ -205,7 +220,7 @@
     [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
     [uploadrequest startSynchronous];
     NSString *rrr = [uploadrequest responseString];
-    NSLog(@"%@",rrr);
+    //NSLog(@"%@",rrr);
 }
 
 - (void)viewDidAppear:(BOOL)animated

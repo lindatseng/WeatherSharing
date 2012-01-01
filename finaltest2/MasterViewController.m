@@ -12,7 +12,7 @@
 #import "JSONKit.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-
+#import "LocationInfo.h"
 
 @implementation MasterViewController
 
@@ -114,7 +114,6 @@
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"123456");
     mylat = newLocation.coordinate.latitude;
     mylng = newLocation.coordinate.longitude;
     _getPosition = TRUE;
@@ -134,8 +133,6 @@
 
 - (void) uploadData
 {
-    NSLog(@"777");
-    NSLog(@"%f%f",mylat,mylng);
     NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
     ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
     NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
@@ -146,7 +143,6 @@
     [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
     [uploadrequest startSynchronous];
     NSString *rrr = [uploadrequest responseString];
-    NSLog(@"%@",rrr);
 }
 
 -(IBAction)buttonClicked{
@@ -159,9 +155,7 @@
     
     
     NSString *situation = [NSString stringWithFormat:@"rain %d;temperature%d",_rainState,_temperatureState];
-    situationLabel.text = situation;
-    NSLog(@"123");
-    
+    situationLabel.text = situation;    
 }
 
 -(IBAction)buttonClicked2{
@@ -173,9 +167,7 @@
     _rainState = 2;
     
     NSString *situation = [NSString stringWithFormat:@"rain %d;temperature%d",_rainState,_temperatureState];
-    situationLabel.text = situation;
-    NSLog(@"123");
-    
+    situationLabel.text = situation;    
 }
 
 -(IBAction)buttonClicked3{
@@ -187,9 +179,7 @@
     [_testButton3 setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     _rainState = 3;
     NSString *situation = [NSString stringWithFormat:@"rain %d;temperature%d",_rainState,_temperatureState];
-    situationLabel.text = situation;
-    NSLog(@"123");
-    
+    situationLabel.text = situation;    
 }
 
 -(IBAction)buttonClicked4{
@@ -201,9 +191,7 @@
     _temperatureState = 1;
     
     NSString *situation = [NSString stringWithFormat:@"rain %d;temperature%d",_rainState,_temperatureState];
-    situationLabel.text = situation;
-    NSLog(@"123");
-    
+    situationLabel.text = situation;    
 }
 
 -(IBAction)buttonClicked5{
@@ -214,9 +202,7 @@
     [_testButton6 setBackgroundImage:backgroundImage2 forState:UIControlStateNormal];
     _temperatureState = 2;
     NSString *situation = [NSString stringWithFormat:@"rain %d;temperature%d",_rainState,_temperatureState];
-    situationLabel.text = situation;
-    NSLog(@"123");
-    
+    situationLabel.text = situation;    
 }
 
 -(IBAction)buttonClicked6{
@@ -228,55 +214,76 @@
     [_testButton6 setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     _temperatureState = 3;
     NSString *situation = [NSString stringWithFormat:@"rain %d;temperature%d",_rainState,_temperatureState];
-    situationLabel.text = situation;
-    NSLog(@"123");
-    
+    situationLabel.text = situation;    
 }
 
 
 -(IBAction)startClicked{
  
-
-    NSLog(@"startClicked1");
     [self uploadData];
-    
-    
-//    NSURL *url = [NSURL URLWithString:@"http://suitingweather.appspot.com/obs?location=46688&output=json"];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    [request startSynchronous];
-//    NSError *error = [request error];
-//    if (!error) {
-//         
-//        NSString *response = [request responseString];
-//        
-//        id result = [response objectFromJSONString];        
-//        if ([result isKindOfClass:[NSDictionary class]]) {
-//            NSLog(@"getdata");      
-//            NSDictionary *dict = [response objectFromJSONString];
-//            NSDictionary *_dictTwo = [dict objectForKey:@"result"];
-//            
-//            NSString *_time = [_dictTwo objectForKey:@"time"];
-//
-//           // float lat = [_lat floatValue];
-//            
-//            NSLog(@"%@",_time);
-//            
-//        }
-//        else {
-//             //TODO        
-//        }
-//        
-//        
-//    }
-//    else {
-//        //TODO
-//    }
-    
-    
+
+    LocationInfo *_locationInfo = [[LocationInfo alloc] initOBSLocations];
+    NSArray *locations = [_locationInfo OBSLocations];
     
     if (!self.detailViewController) {
         self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
     }
+    if(!self.detailViewController.obsInfo){
+        self.detailViewController.obsInfo = [[NSMutableArray alloc]initWithCapacity:0];
+    }
+    
+    
+    for(NSUInteger i=0;i<[locations count];i++){
+        
+    NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+                       [[locations objectAtIndex:i]objectForKey:@"identifier"]];
+    NSURL *url = [NSURL URLWithString:temp1];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request startSynchronous];
+    NSError *error = [request error];
+    if (!error) {
+         
+        NSString *response = [request responseString];
+        
+        id result = [response objectFromJSONString];        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dict = [response objectFromJSONString];
+            NSDictionary *_dictTwo = [dict objectForKey:@"result"];
+            
+            //NSString *_time = [_dictTwo objectForKey:@"time"];
+
+           // float lat = [_lat floatValue];
+            
+            
+            NSString *rain = [_dictTwo objectForKey:@"rain"];
+            NSString *temperature = [_dictTwo objectForKey:@"temperature"];
+            NSString *name = [_dictTwo objectForKey:@"locationName"];
+            NSString *description = [_dictTwo objectForKey:@"description"];
+            NSString *_time = [_dictTwo objectForKey:@"time"];
+            [self.detailViewController.obsInfo addObject:[[NSDictionary alloc]initWithObjectsAndKeys:rain ,@"rain",
+                                                        temperature,@"temperature",
+                                                        name, @"locationName",
+                                                        description,@"description",
+                                                        _time,@"time",
+                                                        [[locations objectAtIndex:i]objectForKey:@"longt"],@"longt",
+                                                        [[locations objectAtIndex:i]objectForKey:@"lat"],@"lat",
+                                                          nil ]];
+        }
+        else {
+             //TODO        
+        }
+        
+        
+    }
+    else {
+        //TODO
+    }
+    }
+    
+    
+    
+    
+    
     [self.navigationController pushViewController:self.detailViewController animated:YES];
     
 }
