@@ -16,10 +16,16 @@
     IBOutlet UILabel *latLabel;
     IBOutlet UILabel *longLabel;
     IBOutlet UILabel *testLabel;
+    float mylat;
+    float mylng;
     BOOL _doneInitialZoom;
     MKMapView *_mapView;
   //  IBOutlet UIButton *testButton;
    
 }
 
-@property (nonatomic, retain) MKMapView *mapView;@end
+@property (nonatomic, retain) MKMapView *mapView;
+
+@end
+
+
