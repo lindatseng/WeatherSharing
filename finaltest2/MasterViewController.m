@@ -219,7 +219,7 @@
 
 
 -(IBAction)startClicked{
- 
+    NSLog(@"startClicked");
     [self uploadData];
 
     LocationInfo *_locationInfo = [[LocationInfo alloc] initOBSLocations];
@@ -231,11 +231,12 @@
     if(!self.detailViewController.obsInfo){
         self.detailViewController.obsInfo = [[NSMutableArray alloc]initWithCapacity:0];
     }
-    
+    if(!self.detailViewController.userFeedback){
+        self.detailViewController.userFeedback = [[NSMutableArray alloc]initWithCapacity:0];
+    }
     
     for(NSUInteger i=0;i<[locations count];i++){
-        
-    NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
                        [[locations objectAtIndex:i]objectForKey:@"identifier"]];
     NSURL *url = [NSURL URLWithString:temp1];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -279,7 +280,55 @@
         //TODO
     }
     }
+    //part two
     
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:@"http://sharemyweather.appspot.com/download"]];
+    [request startSynchronous];
+    NSError *error = [request error];
+    if (!error) {
+        
+        NSString *response = [request responseString];
+        
+        id result = [response objectFromJSONString];        
+        if ([result isKindOfClass:[NSArray class]]) {
+            NSArray *data = [NSArray arrayWithArray:result];
+            for (NSUInteger i=0; i<[data count]; i++) {
+                NSDictionary *feedback = [data objectAtIndex:i];
+                //for temporary use only(demo)
+                NSString *rain = @"123";
+                NSString *temperature = @"123";
+                NSString *name = [feedback objectForKey:@"date"];
+                NSString *description = [feedback objectForKey:@"weatherType"];
+                NSString *_time = @"123";
+                [self.detailViewController.userFeedback addObject:[[NSDictionary alloc]initWithObjectsAndKeys:rain ,@"rain",
+                                                              temperature,@"temperature",
+                                                              name, @"locationName",
+                                                              description,@"description",
+                                                              _time,@"time",
+                                                              [feedback objectForKey:@"lng"],@"longt",
+                                                              [feedback objectForKey:@"lat"],@"lat",
+                                                              nil ]];
+
+                //for temporary use only(demo)
+                if (i>5) {
+                    break;
+                }
+                
+            }
+        
+        
+        
+        
+        }
+        else {
+            //TODO        
+        }
+        
+        
+    }
+    else {
+        //TODO
+    }
     
     
     

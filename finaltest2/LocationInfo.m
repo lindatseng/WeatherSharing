@@ -92,7 +92,7 @@
 	[self addToArray:_OBSLocations name:"大武" identifier:@"46754"longt:@"120.9037969659824" lat:@"22.35582393479362"];
     [self addToArray:_OBSLocations name:"礁溪" identifier:@"C0U60" longt:@"121.759167" lat:@"24.820278"];
     [self addToArray:_OBSLocations name:"天祥" identifier:@"C0T82" longt:@"121.487500" lat:@"24.181389"];
-    [self addToArray:_OBSLocations name:"鯉魚潭" identifier:@"C0T87" longt:@"121.529444" lat:@"24.907222"];
+    [self addToArray:_OBSLocations name:"鯉魚潭" identifier:@"C0T87" longt:@"121.529444" lat:@"23.907222"];
     [self addToArray:_OBSLocations name:"光復" identifier:@"C0T96" longt:@"121.416667" lat:@"23.662500"];
     [self addToArray:_OBSLocations name:"池上" identifier:@"C0S74" longt:@"121.201667" lat:@"23.121389"];
 	
