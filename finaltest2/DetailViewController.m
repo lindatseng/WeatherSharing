@@ -16,22 +16,15 @@
 
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
 @end
 
 @implementation DetailViewController
 
-@synthesize detailItem = _detailItem;
-@synthesize detailDescriptionLabel = _detailDescriptionLabel;
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize mapView = _mapView;
-@synthesize changeButton = _changeButton;
-
 
 - (void)dealloc
 {
-    [_detailItem release];
-    [_detailDescriptionLabel release];
     [_masterPopoverController release];
     [locationManager release];
 
@@ -42,29 +35,7 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        [_detailItem release]; 
-        _detailItem = [newDetailItem retain]; 
 
-        // Update the view.
-        [self configureView];
-    }
-
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
-}
-
-- (void)configureView
-{
-    // Update the user interface for the detail item.
-
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
-    }
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -77,17 +48,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
-    
+	// Do any additional setup after loading the view, typically from a nib.    
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
     
-
-    
+    self.navigationController.navigationBarHidden=NO;
+    self.navigationController.toolbarHidden=NO;
+    UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:nil];
+    NSArray *items = [[NSArray alloc]initWithObjects:a,b, nil];
+    [self setToolbarItems:items];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -114,7 +87,20 @@
     NSString *testtext = [NSString stringWithFormat:@"%d23456",2];
     testLabel.text = testtext;
     
-   // [self uploadData];
+
+    //[self uploadData];
+    
+    MKCoordinateRegion region;
+    region.center.latitude = mylat;
+    region.center.longitude = mylng;
+    MKCoordinateSpan span;
+    span.latitudeDelta = .002;
+    span.longitudeDelta = .002;
+    region.span = span;
+    
+    
+    [_mapView setRegion:region animated:YES];
+
     
    /* UIImage *redButtonImage = [UIImage imageNamed:@"pic123.png"];
     
@@ -126,16 +112,6 @@
    // [[testButton layer] setCorner
 }
 
--(IBAction)changeClicked{
-  if(_mapView.mapType == MKMapTypeStandard)
-  {_mapView.mapType = MKMapTypeSatellite;}
-    else if(_mapView.mapType == MKMapTypeSatellite)
-    {_mapView.mapType = MKMapTypeHybrid;}
-    else
-    {_mapView.mapType = MKMapTypeStandard;}
-    
-    
-}
 
 
 - (void)viewDidUnload
@@ -149,18 +125,27 @@
 {
     [super viewWillAppear:animated];
     // 1
-    CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = 25.04;
-    zoomLocation.longitude = 121.53;
-    // 2
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 5*METERS_PER_MILE, 5*METERS_PER_MILE);
-    // 3
-    MKCoordinateRegion adjustedRegion = [_mapView regionThatFits:viewRegion];                
-    // 4
-    [_mapView setRegion:adjustedRegion animated:YES];       
-    _mapView.mapType = MKMapTypeStandard;
-    
-    
+    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    MKCoordinateRegion region;
+    region.center.latitude = 0;
+    region.center.longitude = 0;
+    MKCoordinateSpan span;
+    span.latitudeDelta = .002;
+    span.longitudeDelta = .002;
+    region.span = span;
+    [_mapView setRegion:region animated:YES];
+    [self.view addSubview:_mapView];
+    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
+    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
+    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+    [uploadrequest setPostValue:udid forKey:@"iosUID"];
+    [uploadrequest setPostValue:@"23.5" forKey:@"lat"];
+    [uploadrequest setPostValue:@"121.0" forKey:@"lng"];
+    [uploadrequest setPostValue:@"14" forKey:@"temper"];
+    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
+    [uploadrequest startSynchronous];
+    NSString *rrr = [uploadrequest responseString];
+    NSLog(@"%@",rrr);
     
     
     NSURL *url = [NSURL URLWithString:@"http://sharemyweather.appspot.com/download"];
@@ -185,7 +170,7 @@
             int weatherType = [_weatherType intValue];
             
         
-            NSLog(@"%f %f", lat, lng);
+
             
         }
         else {

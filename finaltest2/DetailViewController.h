@@ -24,11 +24,8 @@
    
 }
 
-@property (strong, nonatomic) id detailItem;
-@property (strong, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) IBOutlet UIButton *changeButton;
+@property (nonatomic, retain) MKMapView *mapView;
 
--(IBAction) changeClicked;
--(void) uploadData;
 @end
+
+
