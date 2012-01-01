@@ -16,6 +16,7 @@
 
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+-(void)myPosition;
 @end
 
 @implementation DetailViewController
@@ -58,7 +59,7 @@
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.toolbarHidden=NO;
     UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:nil];
+    UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
     NSArray *items = [[NSArray alloc]initWithObjects:a,b, nil];
     [self setToolbarItems:items];
 }
@@ -272,5 +273,16 @@
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
 }
-
+-(void)myPosition{
+    MKCoordinateRegion region;
+    region.center.latitude = mylat;
+    region.center.longitude = mylng;
+    MKCoordinateSpan span;
+    span.latitudeDelta = .02;
+    span.longitudeDelta = .02;
+    region.span = span;
+    
+    
+    [_mapView setRegion:region animated:YES];
+}
 @end
