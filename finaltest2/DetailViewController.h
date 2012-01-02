@@ -20,12 +20,15 @@
     float mylng;
     BOOL _doneInitialZoom;
     MKMapView *_mapView;
+    NSMutableArray *obsInfo;
+    NSMutableArray *userFeedback;
   //  IBOutlet UIButton *testButton;
    
 }
 
 @property (nonatomic, retain) MKMapView *mapView;
-
+@property (nonatomic, retain) NSMutableArray *obsInfo;
+@property (nonatomic, retain) NSMutableArray *userFeedback;
 @end
 
 

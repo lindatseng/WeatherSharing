@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8411FC4B14B0494800A1396B /* LocationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411FC4A14B0494700A1396B /* LocationInfo.m */; };
 		843AD08414AB0CDE00CD54CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08314AB0CDE00CD54CA /* UIKit.framework */; };
 		843AD08614AB0CDE00CD54CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08514AB0CDE00CD54CA /* Foundation.framework */; };
 		843AD08814AB0CDE00CD54CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08714AB0CDE00CD54CA /* CoreGraphics.framework */; };
@@ -44,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8411FC4914B0494700A1396B /* LocationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationInfo.h; sourceTree = "<group>"; };
+		8411FC4A14B0494700A1396B /* LocationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationInfo.m; sourceTree = "<group>"; };
 		843AD07F14AB0CDE00CD54CA /* UserWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843AD08314AB0CDE00CD54CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		843AD08514AB0CDE00CD54CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -178,6 +181,8 @@
 				843AD08A14AB0CDE00CD54CA /* Supporting Files */,
 				BFDAB77114AED961009BDCAC /* Annotation.h */,
 				BFDAB77214AED961009BDCAC /* Annotation.m */,
+				8411FC4914B0494700A1396B /* LocationInfo.h */,
+				8411FC4A14B0494700A1396B /* LocationInfo.m */,
 			);
 			path = finaltest2;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				BFDAB83914AF19E0009BDCAC /* ASINetworkQueue.m in Sources */,
 				BFDAB84C14AF655D009BDCAC /* Reachability.m in Sources */,
 				BFDAB84D14AF655D009BDCAC /* ReachabilityAppDelegate.m in Sources */,
+				8411FC4B14B0494800A1396B /* LocationInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
