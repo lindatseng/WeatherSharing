@@ -126,7 +126,6 @@
 		843AD07414AB0CDE00CD54CA = {
 			isa = PBXGroup;
 			children = (
-				BFDAB84614AF2B4B009BDCAC /* SystemConfiguration.framework */,
 				BFDAB81D14AF19CD009BDCAC /* ASIHTTPRequest */,
 				843AD08914AB0CDE00CD54CA /* finaltest2 */,
 				BFDAB76914AED753009BDCAC /* resource */,
@@ -146,6 +145,7 @@
 		843AD08214AB0CDE00CD54CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFDAB84614AF2B4B009BDCAC /* SystemConfiguration.framework */,
 				BFDAB84414AF2A3C009BDCAC /* libxml2.dylib */,
 				BFDAB84214AF29D0009BDCAC /* MobileCoreServices.framework */,
 				BFDAB83A14AF19EF009BDCAC /* CFNetwork.framework */,
