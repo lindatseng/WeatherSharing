@@ -17,4 +17,7 @@ NSMutableArray *_OBSLocations;
 - (void)addToArray:(NSMutableArray *)array name:(char *)name identifier:(NSString *)identifier longt:(NSString *)longt lat:(NSString *)lat;
 - (NSArray *)OBSLocations;
 - (LocationInfo *)initOBSLocations;
+-(float)latitudeForLocation:(NSString *)locationName;
+-(float)longitudeForLocation:(NSString *)locationName;
++ (LocationInfo *)sharedInfo;
 @end

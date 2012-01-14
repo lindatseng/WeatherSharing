@@ -9,8 +9,7 @@
 #import "DetailViewController.h"
 #import "Annotation.h"
 #import "JSONKit.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+#import "LocationInfo.h"
 #define METERS_PER_MILE 1609.344
 
 
@@ -28,6 +27,7 @@
 @synthesize mapView = _mapView;
 @synthesize obsInfo;
 @synthesize userFeedback;
+@synthesize queue;
 - (void)dealloc
 {
     [_masterPopoverController release];
@@ -48,6 +48,39 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSString *response = [request responseString];
+    id result = [response objectFromJSONString];  
+    
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *temp1 = [response objectFromJSONString];
+        NSDictionary *data = [temp1 objectForKey:@"result"];
+        NSString *locationName = [data objectForKey:@"locationName"];
+        NSString *description = [data objectForKey:@"description"];
+        float longitude = [[LocationInfo sharedInfo] longitudeForLocation:locationName];
+        float latitude = [[LocationInfo sharedInfo] latitudeForLocation:locationName];NSLog(@"%f,%f",latitude,longitude);
+        CLLocationCoordinate2D coordinate = {latitude,longitude};
+        Annotation *annotation =[[Annotation alloc]initWithTitle:locationName subTitle:description andCoordinate:coordinate];
+        [_mapView addAnnotation:annotation];
+        
+        
+        //data from suitingweather.appspot.com
+    }
+    else if([result isKindOfClass:[NSArray class]]){
+        
+        
+        //data from sharemyweather.appspot.com
+    }
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+}
+
+
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -60,12 +93,31 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
     
+    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    _mapView.delegate=self;
+    [self.view addSubview:_mapView];
+    isLocated = NO;
+    
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.toolbarHidden=NO;
     UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
     NSArray *items = [[NSArray alloc]initWithObjects:a,b, nil];
     [self setToolbarItems:items];
+    
+    if (![self queue]) {
+        [self setQueue:[[[NSOperationQueue alloc] init] autorelease]];
+    }
+    queue.maxConcurrentOperationCount=1;
+    for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
+        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
+        NSURL *url = [NSURL URLWithString:temp1];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        //[request startAsynchronous];
+        [request setDelegate:self];
+        [[self queue] addOperation:request];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -80,84 +132,46 @@
         region.center.latitude = mylat;
         region.center.longitude = mylng;
         MKCoordinateSpan span;
-        span.latitudeDelta = .02;
-        span.longitudeDelta = .02;
+        span.latitudeDelta = .2;
+        span.longitudeDelta = .2;
         region.span = span;
         [_mapView setRegion:region animated:YES];
         isLocated = YES;
     }
 }
 
-
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+    MKCoordinateSpan span = _mapView.region.span;
+    MKCoordinateRegion region = _mapView.region;
+    float x1=region.center.longitude-span.longitudeDelta/2;
+    float y1=region.center.latitude-span.latitudeDelta/2;
+    float x2=region.center.longitude+span.longitudeDelta/2;
+    float y2=region.center.latitude+span.latitudeDelta/2;
+    
+    NSLog(@"Map View Span: (%f, %f)->(%f, %f)",x1,y1,x2,y2);
+}
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    // 1
-    isLocated = NO;
-    
-    
-    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-    [self.view addSubview:_mapView];
-    
-    NSMutableArray *annotation = [[NSMutableArray alloc]initWithCapacity:0];
-    for (NSUInteger i=0; i<[obsInfo count]; i++) {
-        float lat = [[[obsInfo objectAtIndex:i] objectForKey:@"lat"] floatValue];
-        float longt = [[[obsInfo objectAtIndex:i] objectForKey:@"longt"] floatValue];
-        NSString *name = [[obsInfo objectAtIndex:i] objectForKey:@"locationName"];
-        NSString *description = [[obsInfo objectAtIndex:i] objectForKey:@"description"];
-        CLLocationCoordinate2D location0 = {lat,longt};
-        Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:name subTitle:description andCoordinate:location0];
-        [annotation addObject:myAnnotation0];
-    }
-    
-    for (NSUInteger i=0; i<[userFeedback count]; i++) {
-        float lat = [[[userFeedback objectAtIndex:i] objectForKey:@"lat"] floatValue];
-        float longt = [[[userFeedback objectAtIndex:i] objectForKey:@"longt"] floatValue];
-        NSString *name = [[userFeedback objectAtIndex:i] objectForKey:@"locationName"];
-        NSString *description = [[userFeedback objectAtIndex:i] objectForKey:@"description"];
-        NSLog(@"%@,%@",name,description);
-        CLLocationCoordinate2D location0 = {lat,longt};
-        Annotation *myAnnotation0 = [[Annotation alloc]initWithTitle:name subTitle:name andCoordinate:location0];
-        [annotation addObject:myAnnotation0];
-    }
-    _mapView.showsUserLocation = YES;
-    [_mapView addAnnotations:[NSArray arrayWithArray:annotation]];
-    
-    
-//    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
-//    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
-//    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
-//    [uploadrequest setPostValue:udid forKey:@"iosUID"];
-//    [uploadrequest setPostValue:@"23.5" forKey:@"lat"];
-//    [uploadrequest setPostValue:@"121.0" forKey:@"lng"];
-//    [uploadrequest setPostValue:@"14" forKey:@"temper"];
-//    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
-//    [uploadrequest startSynchronous];
-//    NSString *rrr = [uploadrequest responseString];
-
-    
 }
 
 - (void) uploadData
 {
-    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
-    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
-    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
-    [uploadrequest setPostValue:udid forKey:@"iosUID"];
-    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylat] forKey:@"lat"];
-    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylng] forKey:@"lng"];
-    [uploadrequest setPostValue:@"14" forKey:@"temper"];
-    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
-    [uploadrequest startSynchronous];
-    NSString *rrr = [uploadrequest responseString];
+//    NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
+//    ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];
+//    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+//    [uploadrequest setPostValue:udid forKey:@"iosUID"];
+//    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylat] forKey:@"lat"];
+//    [uploadrequest setPostValue:[NSNumber numberWithFloat:mylng] forKey:@"lng"];
+//    [uploadrequest setPostValue:@"14" forKey:@"temper"];
+//    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
+//    [uploadrequest startSynchronous];
+//    NSString *rrr = [uploadrequest responseString];
     //NSLog(@"%@",rrr);
 }
 

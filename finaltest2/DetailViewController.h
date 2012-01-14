@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 @interface DetailViewController : UIViewController 
-<CLLocationManagerDelegate>{
+<CLLocationManagerDelegate,
+ASIHTTPRequestDelegate,
+MKMapViewDelegate>{
     CLLocationManager *locationManager;
     IBOutlet UILabel *latLabel;
     IBOutlet UILabel *longLabel;
@@ -23,12 +26,13 @@
     NSMutableArray *obsInfo;
     NSMutableArray *userFeedback;
   //  IBOutlet UIButton *testButton;
-   
+    NSOperationQueue *queue;
 }
 
 @property (nonatomic, retain) MKMapView *mapView;
 @property (nonatomic, retain) NSMutableArray *obsInfo;
 @property (nonatomic, retain) NSMutableArray *userFeedback;
+@property (nonatomic, retain) NSOperationQueue *queue;
 @end
 
 
