@@ -120,7 +120,7 @@
 						<int key="IBSelectedSegmentIndex">0</int>
 						<array key="IBSegmentTitles">
 							<string>Cold</string>
-							<string>Warm</string>
+							<string>Normal</string>
 							<string>Hot</string>
 						</array>
 						<array class="NSMutableArray" key="IBSegmentWidths">

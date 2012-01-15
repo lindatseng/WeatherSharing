@@ -15,7 +15,11 @@
 #import <AssertMacros.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <math.h>
-
+enum {
+    temperature,
+    weather,
+    cwb
+}CurrentView;
 static const NSString *AVCaptureStillImageIsCapturingStillImageContext = @"AVCaptureStillImageIsCapturingStillImageContext";
 
 static CGFloat DegreesToRadians(CGFloat degrees) {return degrees * M_PI / 180;};
@@ -109,6 +113,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
 - (void)teardownAVCapture;
 - (void)drawFaceBoxesForFeatures:(NSArray *)features forVideoBox:(CGRect)clap orientation:(UIDeviceOrientation)orientation;
 -(void)setFaceSwitch;
+-(void)changeCurrentView;
 @end
 
 @implementation DetailViewController
@@ -118,6 +123,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
 @synthesize obsInfo;
 @synthesize userFeedback;
 @synthesize queue;
+@synthesize currentView;
 - (void)dealloc
 {
     [_masterPopoverController release];
@@ -608,6 +614,7 @@ bail:
     }
     else if([result isKindOfClass:[NSArray class]]){
         NSLog(@"array");
+        //userFeedback=result;
         //data from sharemyweather.appspot.com
         for (NSUInteger i=0; i<[result count]; i++) {
             NSLog(@"%d",i);
@@ -622,6 +629,7 @@ bail:
                                                        andCoordinate:coordinate
                                                         andWeather:weatherType andTemperature:temperatureType];
             //NSLog(@"%f,%f,%@,%@",longitude,latitude,weatherType,temperatureType);
+            [userFeedback addObject:annotation];
             [_mapView addAnnotation:annotation];
         }
         
@@ -640,11 +648,18 @@ bail:
     static NSString *sunnyIdentifier=@"sunny";
     static NSString *cloudyIdentifier=@"cloudy";
     static NSString *rainyIdentifier=@"rainy";
+    static NSString *coldIdentifier=@"cold";
+    static NSString *normalIdentifier=@"normal";
+    static NSString *hotIdentifier=@"hot";
+    static NSString *cwbIdentifier=@"cwb";
     if([annotation isKindOfClass:[Annotation class]]){NSLog(@"if1");
         //Try to get an unused annotation, similar to uitableviewcells
         Annotation *anno=annotation;
         MKAnnotationView *annotationView=nil;
         NSLog(@"%d",anno.weatherState);
+        if (currentView==weather) {
+        
+        
         switch (anno.weatherState) {
             case Sunny:{NSLog(@"sunny");
                 annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:sunnyIdentifier];
@@ -662,24 +677,49 @@ bail:
                 NSLog(@"defaulttt");
                 break;
         }
-        
+        }
+        else if(currentView==temperature){
+            switch (anno.temperatureState) {
+                case Cold:{NSLog(@"cold");
+                    annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:coldIdentifier];
+                }
+                    break;
+                case Hot:{NSLog(@"hot");
+                    annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:hotIdentifier];
+                }
+                    break;
+                case Normal:{NSLog(@"normal");
+                    annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:normalIdentifier];
+                }
+                    break;
+                default:
+                    NSLog(@"defaulttt");
+                    break;
+            }
+        }
+        else{
+            annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:cwbIdentifier];
+        }
         //If one isn't available, create a new one
         if(!annotationView){
             NSLog(@"if2");
+            if (currentView==weather) {
             switch (anno.weatherState) {
+                    
                 case Sunny:{
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:sunnyIdentifier];
-                    annotationView.image=[UIImage imageNamed:@"cold.png"];
+                    
+                    annotationView.image=[UIImage imageNamed:@""];
                 }
                     break;
                 case Cloudy:{
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:cloudyIdentifier];
-                    annotationView.image=[UIImage imageNamed:@"hot.png"];
+                    annotationView.image=[UIImage imageNamed:@""];
                 }
                     break;
                 case Rainy:{
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
-                    annotationView.image=[UIImage imageNamed:@"normal.png"];
+                    annotationView.image=[UIImage imageNamed:@""];
                 }
                     break;
                 default:
@@ -690,8 +730,41 @@ bail:
                     break;
             }
             annotationView.canShowCallout=YES;
-            
-            
+            }
+            else if(currentView==temperature){
+                switch (anno.temperatureState) {
+                        
+                    case Cold:{
+                        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:coldIdentifier];
+                        
+                        annotationView.image=[UIImage imageNamed:@"cold.png"];
+                    }
+                        break;
+                    case Hot:{
+                        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:hotIdentifier];
+                        annotationView.image=[UIImage imageNamed:@"hot.png"];
+                    }
+                        break;
+                    case Normal:{
+                        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:normalIdentifier];
+                        annotationView.image=[UIImage imageNamed:@"normal.png"];
+                    }
+                        break;
+                    default:
+                        //annotationView=nil;
+                        NSLog(@"default");
+                        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
+                        annotationView.image=[UIImage imageNamed:@"normal.png"];
+                        break;
+                }
+                annotationView.canShowCallout=YES;
+            }
+            else{
+                annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:
+                                cwbIdentifier];
+                
+                annotationView.image=[UIImage imageNamed:@""];
+            }
         }
         return annotationView;
     }
@@ -709,12 +782,13 @@ bail:
     locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
-    
+    userFeedback = [[NSMutableArray alloc]initWithCapacity:0];
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     _mapView.delegate=self;
     [self.view addSubview:_mapView];
     isLocated = NO;
     isDetectingFace = NO;
+    currentView=temperature;
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.toolbarHidden=NO;
     UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face Off"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
@@ -724,6 +798,9 @@ bail:
     NSArray *items = [[NSArray alloc]initWithObjects:c,a,b, nil];
     [self setToolbarItems:items];
     
+    
+    UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Temperature" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+    self.navigationItem.rightBarButtonItem=d;
     if (![self queue]) {
         [self setQueue:[[[NSOperationQueue alloc] init] autorelease]];
     }
@@ -776,7 +853,42 @@ bail:
     faceState = 1;
 
 }
-
+-(void)changeCurrentView{
+    switch (currentView) {
+        case temperature:{
+            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Weather" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+            self.navigationItem.rightBarButtonItem=d;
+            currentView=weather;
+            [_mapView removeAnnotations:_mapView.annotations];
+            for (NSUInteger i=0;i<[userFeedback count]; i++) {
+                [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
+            }
+        }
+            break;
+        case weather:{
+            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"cwb" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+            self.navigationItem.rightBarButtonItem=d;
+            currentView=cwb;
+            [_mapView removeAnnotations:_mapView.annotations];
+            for (NSUInteger i=0;i<[userFeedback count]; i++) {
+                [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
+            }
+        }
+            break;
+        case cwb:{
+            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Temperature" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+            self.navigationItem.rightBarButtonItem=d;
+            currentView=temperature;
+            [_mapView removeAnnotations:_mapView.annotations];
+            for (NSUInteger i=0;i<[userFeedback count]; i++) {
+                [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation

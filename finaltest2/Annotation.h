@@ -15,7 +15,7 @@ enum {
 }WeatherState;
 enum {
     Cold,
-    Warm,
+    Normal,
     Hot
 }TemperatureState;
 @interface Annotation : NSObject <MKAnnotation>{

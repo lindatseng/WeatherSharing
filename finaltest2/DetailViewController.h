@@ -42,13 +42,15 @@ AVCaptureVideoDataOutputSampleBufferDelegate>{
 	CGFloat beginGestureScale;
 	CGFloat effectiveScale;
     int faceState;
-
+    int currentView;
 }
 
 @property (nonatomic, retain) MKMapView *mapView;
 @property (nonatomic, retain) NSMutableArray *obsInfo;
 @property (nonatomic, retain) NSMutableArray *userFeedback;
 @property (nonatomic, retain) NSOperationQueue *queue;
+@property (nonatomic) int currentView;
+
 @end
 
 
