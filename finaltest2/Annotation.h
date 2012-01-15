@@ -8,18 +8,31 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
-
+enum {
+    Sunny,
+    Cloudy,
+    Rainy
+}WeatherState;
+enum {
+    Cold,
+    Warm,
+    Hot
+}TemperatureState;
 @interface Annotation : NSObject <MKAnnotation>{
     NSString *_title;
     NSString *_subTitle;
     CLLocationCoordinate2D _coordiante2D;
+    int weatherState;
+    int temperatureState;
 }
 
 @property (nonatomic, readonly) NSString *title;
 @property (nonatomic, readonly) NSString *subtitle;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic, weak) int weatherState;
+@property (nonatomic, weak) int temperatureState;
 
--(id) initWithTitle:(NSString *)theTitle subTitle:(NSString *)theSubTitle andCoordinate:(CLLocationCoordinate2D) theCoordinate;
+-(id) initWithTitle:(NSString *)theTitle subTitle:(NSString *)theSubTitle andCoordinate:(CLLocationCoordinate2D)theCoordinate andWeather:(int)weatherState andTemperature:(int)weatherState;
 
 @end
 

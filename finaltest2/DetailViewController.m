@@ -596,7 +596,7 @@ bail:
         CLLocationCoordinate2D coordinate = {latitude,longitude};
         Annotation *annotation =[[Annotation alloc]initWithTitle:locationName subTitle:description andCoordinate:coordinate];
         
-            [_mapView addAnnotation:annotation];
+        [_mapView addAnnotation:annotation];
        
         
         
@@ -619,7 +619,8 @@ bail:
             CLLocationCoordinate2D coordinate = {latitude,longitude};
             Annotation *annotation =[[Annotation alloc]initWithTitle: [NSString stringWithFormat:@"Somewhere"]
                                                             subTitle: [NSString stringWithFormat:@"%@,%@",weatherType,temperatureType]
-                                                       andCoordinate:coordinate];
+                                                       andCoordinate:coordinate
+                                                        andWeather:weatherType andTemperature:temperatureType];
             //NSLog(@"%f,%f,%@,%@",longitude,latitude,weatherType,temperatureType);
             [_mapView addAnnotation:annotation];
         }
@@ -634,7 +635,19 @@ bail:
 }
 
 
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation{
+    static NSString *parkingAnnotationIdentifier=@"ParkingAnnotationIdentifier";
+    
+    if([annotation isKindOfClass:[Annotation class]]){
+           
+        
+        MKAnnotationView *annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:parkingAnnotationIdentifier];
+        annotationView.image=[UIImage imageNamed:@"parkingIcon.png"];
 
+        return annotationView;
+    }
+    return nil;
+}
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad

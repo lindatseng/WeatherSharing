@@ -10,13 +10,15 @@
 
 @implementation Annotation
 @synthesize title=_title,subtitle=_subTitle,coordinate=_coordiante2D;
-
--(id) initWithTitle:(NSString *)theTitle subTitle:(NSString *)theSubTitle andCoordinate:(CLLocationCoordinate2D)theCoordinate{
+@synthesize weatherState,temperatureState;
+-(id) initWithTitle:(NSString *)theTitle subTitle:(NSString *)theSubTitle andCoordinate:(CLLocationCoordinate2D)theCoordinate andWeather:(int)weatherState andTemperature:(int)temperatureState{
     self = [super init];
     if(self){
         _title = [theTitle copy];
         _subTitle = [theSubTitle copy];
         _coordiante2D = theCoordinate;
+        self.weatherState=weatherState;
+        self.temperatureState=temperatureState;
     }
     return self;
 }
