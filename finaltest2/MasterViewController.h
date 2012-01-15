@@ -12,8 +12,9 @@
 
 @interface MasterViewController : UIViewController<CLLocationManagerDelegate>{
 
-CLLocationManager *locationManager;
-IBOutlet UILabel *situationLabel;
+    CLLocationManager *locationManager;
+    IBOutlet UILabel *situationLabel;
+    
     int _rainState;
     int _temperatureState;
     
@@ -25,19 +26,10 @@ IBOutlet UILabel *situationLabel;
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) IBOutlet UIButton *startButton;
-@property (nonatomic, retain) IBOutlet UIButton *testButton;
-@property (nonatomic, retain) IBOutlet UIButton *testButton2;
-@property (nonatomic, retain) IBOutlet UIButton *testButton3;
-@property (nonatomic, retain) IBOutlet UIButton *testButton4;
-@property (nonatomic, retain) IBOutlet UIButton *testButton5;
-@property (nonatomic, retain) IBOutlet UIButton *testButton6;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *control1;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *control2;
 
 -(IBAction) startClicked;
--(IBAction) buttonClicked;
--(IBAction) buttonClicked2;
--(IBAction) buttonClicked3;
--(IBAction) buttonClicked4;
--(IBAction) buttonClicked5;
--(IBAction) buttonClicked6;
+
 -(void) uploadData;
 @end

@@ -49,9 +49,6 @@
 		BFDAB84714AF2B4B009BDCAC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDAB84614AF2B4B009BDCAC /* SystemConfiguration.framework */; };
 		BFDAB84C14AF655D009BDCAC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB84914AF655D009BDCAC /* Reachability.m */; };
 		BFDAB84D14AF655D009BDCAC /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDAB84B14AF655D009BDCAC /* ReachabilityAppDelegate.m */; };
-		BFF0AD8114C2F918001D420B /* cold.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD7E14C2F918001D420B /* cold.png */; };
-		BFF0AD8214C2F918001D420B /* hot.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD7F14C2F918001D420B /* hot.png */; };
-		BFF0AD8314C2F918001D420B /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD8014C2F918001D420B /* normal.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,9 +118,6 @@
 		BFDAB84914AF655D009BDCAC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BFDAB84A14AF655D009BDCAC /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
 		BFDAB84B14AF655D009BDCAC /* ReachabilityAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityAppDelegate.m; sourceTree = "<group>"; };
-		BFF0AD7E14C2F918001D420B /* cold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cold.png; sourceTree = "<group>"; };
-		BFF0AD7F14C2F918001D420B /* hot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot.png; sourceTree = "<group>"; };
-		BFF0AD8014C2F918001D420B /* normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +169,8 @@
 		843AD08214AB0CDE00CD54CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
 				84AACF0014C17EB300149141 /* ImageIO.framework */,
 				84AACEFE14C17EAD00149141 /* QuartzCore.framework */,
 				84AACEFC14C17EA600149141 /* CoreMedia.framework */,
@@ -182,6 +178,7 @@
 				84AACEF814C17E9600149141 /* CoreImage.framework */,
 				84AACEF614C17E9000149141 /* AVFoundation.framework */,
 				84AACEF314C17E8B00149141 /* CoreVideo.framework */,
+>>>>>>> f542ee7cee8450f2be89b7be08abce37dcb1fb02
 				BFDAB84614AF2B4B009BDCAC /* SystemConfiguration.framework */,
 				BFDAB84414AF2A3C009BDCAC /* libxml2.dylib */,
 				BFDAB84214AF29D0009BDCAC /* MobileCoreServices.framework */,
@@ -235,7 +232,6 @@
 		BFDAB76914AED753009BDCAC /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				BFF0AD7D14C2F918001D420B /* temperature */,
 				BFDAB76A14AED753009BDCAC /* temp */,
 			);
 			name = resource;
@@ -281,16 +277,6 @@
 				BFDAB84B14AF655D009BDCAC /* ReachabilityAppDelegate.m */,
 			);
 			name = ASIHTTPRequest;
-			sourceTree = "<group>";
-		};
-		BFF0AD7D14C2F918001D420B /* temperature */ = {
-			isa = PBXGroup;
-			children = (
-				BFF0AD7E14C2F918001D420B /* cold.png */,
-				BFF0AD7F14C2F918001D420B /* hot.png */,
-				BFF0AD8014C2F918001D420B /* normal.png */,
-			);
-			path = temperature;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,9 +337,6 @@
 				BFDAB76E14AED753009BDCAC /* abc_blocks.png in Resources */,
 				BFDAB76F14AED753009BDCAC /* apple_ex.png in Resources */,
 				BFDAB77014AED753009BDCAC /* pic123.png in Resources */,
-				BFF0AD8114C2F918001D420B /* cold.png in Resources */,
-				BFF0AD8214C2F918001D420B /* hot.png in Resources */,
-				BFF0AD8314C2F918001D420B /* normal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

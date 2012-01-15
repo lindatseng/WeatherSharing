@@ -9,10 +9,31 @@
 #import "LocationInfo.h"
 
 
-
+static LocationInfo *locationInfo;
 @implementation LocationInfo
 
++ (LocationInfo *)sharedInfo
+{
+	if (!locationInfo) {
+		locationInfo = [[LocationInfo alloc]initOBSLocations];
+	}
+	return locationInfo;
+}
 
+-(float)latitudeForLocation:(NSString *)locationName{
+    for (NSUInteger i=0;i<[locationInfo.OBSLocations count]; i++) {
+        if([locationName isEqualToString:[[locationInfo.OBSLocations objectAtIndex:i]objectForKey:@"name"]]){
+            return [[[locationInfo.OBSLocations objectAtIndex:i]objectForKey:@"lat"] floatValue];
+        }
+    }
+}
+-(float)longitudeForLocation:(NSString *)locationName{
+    for (NSUInteger i=0;i<[locationInfo.OBSLocations count]; i++) {
+        if([locationName isEqualToString:[[locationInfo.OBSLocations objectAtIndex:i]objectForKey:@"name"]]){
+            return [[[locationInfo.OBSLocations objectAtIndex:i]objectForKey:@"longt"] floatValue];
+        }
+    }
+}
 - (void)addToArray:(NSMutableArray *)array name:(char *)name identifier:(NSString *)identifier longt:(NSString *)longt lat:(NSString *)lat
 {
 	NSString *nameString = [NSString stringWithUTF8String:name];
