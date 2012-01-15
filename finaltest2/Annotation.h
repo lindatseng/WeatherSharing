@@ -29,8 +29,8 @@ enum {
 @property (nonatomic, readonly) NSString *title;
 @property (nonatomic, readonly) NSString *subtitle;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, weak) int weatherState;
-@property (nonatomic, weak) int temperatureState;
+@property (nonatomic) int weatherState;
+@property (nonatomic) int temperatureState;
 
 -(id) initWithTitle:(NSString *)theTitle subTitle:(NSString *)theSubTitle andCoordinate:(CLLocationCoordinate2D)theCoordinate andWeather:(int)weatherState andTemperature:(int)weatherState;
 

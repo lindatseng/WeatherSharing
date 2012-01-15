@@ -614,11 +614,11 @@ bail:
             NSDictionary *data = [result objectAtIndex:i];
             float longitude =[[data objectForKey:@"lng"] floatValue];
             float latitude = [[data objectForKey:@"lat"] floatValue];
-            NSString *weatherType = [data objectForKey:@"weatherType"];
-            NSString *temperatureType = [data objectForKey:@"temper"];
+            int weatherType = [[data objectForKey:@"weatherType"] intValue];
+            int temperatureType = [[data objectForKey:@"temper"] intValue];
             CLLocationCoordinate2D coordinate = {latitude,longitude};
             Annotation *annotation =[[Annotation alloc]initWithTitle: [NSString stringWithFormat:@"Somewhere"]
-                                                            subTitle: [NSString stringWithFormat:@"%@,%@",weatherType,temperatureType]
+                                                            subTitle: [NSString stringWithFormat:@"%d,%d",weatherType,temperatureType]
                                                        andCoordinate:coordinate
                                                         andWeather:weatherType andTemperature:temperatureType];
             //NSLog(@"%f,%f,%@,%@",longitude,latitude,weatherType,temperatureType);
@@ -636,18 +636,68 @@ bail:
 
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation{
-    static NSString *parkingAnnotationIdentifier=@"ParkingAnnotationIdentifier";
-    
-    if([annotation isKindOfClass:[Annotation class]]){
-           
+    NSLog(@"mapView");
+    static NSString *sunnyIdentifier=@"sunny";
+    static NSString *cloudyIdentifier=@"cloudy";
+    static NSString *rainyIdentifier=@"rainy";
+    if([annotation isKindOfClass:[Annotation class]]){NSLog(@"if1");
+        //Try to get an unused annotation, similar to uitableviewcells
+        Annotation *anno=annotation;
+        MKAnnotationView *annotationView=nil;
+        NSLog(@"%d",anno.weatherState);
+        switch (anno.weatherState) {
+            case Sunny:{NSLog(@"sunny");
+                annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:sunnyIdentifier];
+            }
+                break;
+            case Cloudy:{NSLog(@"cloudy");
+                annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:cloudyIdentifier];
+            }
+                break;
+            case Rainy:{NSLog(@"rainy");
+                annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:rainyIdentifier];
+            }
+                break;
+            default:
+                NSLog(@"defaulttt");
+                break;
+        }
         
-        MKAnnotationView *annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:parkingAnnotationIdentifier];
-        annotationView.image=[UIImage imageNamed:@"parkingIcon.png"];
-
+        //If one isn't available, create a new one
+        if(!annotationView){
+            NSLog(@"if2");
+            switch (anno.weatherState) {
+                case Sunny:{
+                    annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:sunnyIdentifier];
+                    annotationView.image=[UIImage imageNamed:@"cold.png"];
+                }
+                    break;
+                case Cloudy:{
+                    annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:cloudyIdentifier];
+                    annotationView.image=[UIImage imageNamed:@"hot.png"];
+                }
+                    break;
+                case Rainy:{
+                    annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
+                    annotationView.image=[UIImage imageNamed:@"normal.png"];
+                }
+                    break;
+                default:
+                    //annotationView=nil;
+                    NSLog(@"default");
+                    annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
+                    annotationView.image=[UIImage imageNamed:@"normal.png"];
+                    break;
+            }
+            annotationView.canShowCallout=YES;
+            
+            
+        }
         return annotationView;
     }
     return nil;
 }
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -773,13 +823,13 @@ bail:
         if(lat>lat1&&lat<lat2&&longt>long1&&longt<long2&&isLocated&&!onMap){
         
         
-        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
-                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
-        NSURL *url = [NSURL URLWithString:temp1];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        //[request startAsynchronous];
-        [request setDelegate:self];
-        [[self queue] addOperation:request];
+//        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+//                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
+//        NSURL *url = [NSURL URLWithString:temp1];
+//        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//        //[request startAsynchronous];
+//        [request setDelegate:self];
+//        [[self queue] addOperation:request];
             
         }
     }
