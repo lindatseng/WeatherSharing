@@ -115,7 +115,7 @@
 {
     NSString *rainType = [NSString stringWithFormat:@"%d",control1.selectedSegmentIndex];
     NSString *temperatureType = [NSString stringWithFormat:@"%d",control2.selectedSegmentIndex];
-    NSLog(@"%@,%@",rainType,temperatureType);
+    
     
     NSURL *uploadurl = [NSURL URLWithString:@"http://sharemyweather.appspot.com/upload"];
     ASIFormDataRequest *uploadrequest = [ASIFormDataRequest requestWithURL:uploadurl];

@@ -101,13 +101,14 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
 @interface DetailViewController ()
 {
     BOOL isLocated;
+    BOOL isDetectingFace;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 -(void)myPosition;
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
 - (void)drawFaceBoxesForFeatures:(NSArray *)features forVideoBox:(CGRect)clap orientation:(UIDeviceOrientation)orientation;
-
+-(void)setFaceSwitch;
 @end
 
 @implementation DetailViewController
@@ -240,7 +241,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
                 {faceState=3;
                     span.latitudeDelta = 0.1;
                     span.longitudeDelta = 0.1;} 
-                else if(faceRect.size.width<135)
+                else if(faceRect.size.width<160)
                 {faceState=1;
                  span.latitudeDelta = 2.0;
                  span.longitudeDelta = 2.0;} 
@@ -249,7 +250,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
                  span.longitudeDelta = 0.5;}
                 break;
             case 3:
-                if(faceRect.size.width>385)
+                if(faceRect.size.width>360)
                 {faceState=4;
                     span.latitudeDelta = 0.02;
                     span.longitudeDelta = 0.02;} 
@@ -362,6 +363,11 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {	
+    
+    if(!isDetectingFace){
+        
+    }
+    else{
 	// got an image
 	CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 	CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
@@ -426,6 +432,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
 	dispatch_async(dispatch_get_main_queue(), ^(void) {
 		[self drawFaceBoxesForFeatures:features forVideoBox:clap orientation:curDeviceOrientation];
 	});
+    }
 }
 
 - (AVCaptureVideoOrientation)avOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation
@@ -542,6 +549,29 @@ bail:
 }
 
 // used for KVO observation of the @"capturingStillImage" property to perform flash bulb animation
+-(void)setFaceSwitch{
+    
+    if(isDetectingFace){
+        UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face OFF"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
+        UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
+
+        NSArray *temp = [NSArray arrayWithObjects: c,a,b,nil];
+        [self setToolbarItems:temp];
+        isDetectingFace=!isDetectingFace;
+    }
+    else{
+        UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face ON"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
+        UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
+
+        NSArray *temp = [NSArray arrayWithObjects: c,a,b,nil];
+        [self setToolbarItems:temp];
+        isDetectingFace=!isDetectingFace;
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -551,10 +581,12 @@ bail:
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
+    NSLog(@"requestFinished");
     NSString *response = [request responseString];
     id result = [response objectFromJSONString];  
     
     if ([result isKindOfClass:[NSDictionary class]]) {
+        NSLog(@"dictionary");
         NSDictionary *temp1 = [response objectFromJSONString];
         NSDictionary *data = [temp1 objectForKey:@"result"];
         NSString *locationName = [data objectForKey:@"locationName"];
@@ -563,15 +595,36 @@ bail:
         float latitude = [[LocationInfo sharedInfo] latitudeForLocation:locationName];
         CLLocationCoordinate2D coordinate = {latitude,longitude};
         Annotation *annotation =[[Annotation alloc]initWithTitle:locationName subTitle:description andCoordinate:coordinate];
-        [_mapView addAnnotation:annotation];
+        
+            [_mapView addAnnotation:annotation];
+       
+        
+        
+        
+        
         
         
         //data from suitingweather.appspot.com
     }
     else if([result isKindOfClass:[NSArray class]]){
-        
-        
+        NSLog(@"array");
         //data from sharemyweather.appspot.com
+        for (NSUInteger i=0; i<[result count]; i++) {
+            NSLog(@"%d",i);
+            NSDictionary *data = [result objectAtIndex:i];
+            float longitude =[[data objectForKey:@"lng"] floatValue];
+            float latitude = [[data objectForKey:@"lat"] floatValue];
+            NSString *weatherType = [data objectForKey:@"weatherType"];
+            NSString *temperatureType = [data objectForKey:@"temper"];
+            CLLocationCoordinate2D coordinate = {latitude,longitude};
+            Annotation *annotation =[[Annotation alloc]initWithTitle: [NSString stringWithFormat:@"Somewhere"]
+                                                            subTitle: [NSString stringWithFormat:@"%@,%@",weatherType,temperatureType]
+                                                       andCoordinate:coordinate];
+            //NSLog(@"%f,%f,%@,%@",longitude,latitude,weatherType,temperatureType);
+            [_mapView addAnnotation:annotation];
+        }
+        
+        
     }
 }
 
@@ -598,29 +651,40 @@ bail:
     _mapView.delegate=self;
     [self.view addSubview:_mapView];
     isLocated = NO;
-    
+    isDetectingFace = NO;
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.toolbarHidden=NO;
+    UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face Off"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
+    
     UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
-    NSArray *items = [[NSArray alloc]initWithObjects:a,b, nil];
+    NSArray *items = [[NSArray alloc]initWithObjects:c,a,b, nil];
     [self setToolbarItems:items];
     
     if (![self queue]) {
         [self setQueue:[[[NSOperationQueue alloc] init] autorelease]];
     }
     queue.maxConcurrentOperationCount=1;
-    for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
-        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
-                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
-        NSURL *url = [NSURL URLWithString:temp1];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        //[request startAsynchronous];
-        [request setDelegate:self];
-        [[self queue] addOperation:request];
-    }
     
-    detectFaces = TRUE;
+//    for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
+//        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+//                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
+//        NSURL *url = [NSURL URLWithString:temp1];
+//        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//        //[request startAsynchronous];
+//        [request setDelegate:self];
+//        [[self queue] addOperation:request];
+//    }
+    
+    NSString *temp1 = [NSString stringWithFormat:@"http://sharemyweather.appspot.com/download"];
+    NSURL *url = [NSURL URLWithString:temp1];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDelegate:self];
+    [[self queue] addOperation:request];
+    
+    
+    
+    detectFaces = YES;
     [self setupAVCapture];
 	square = [[UIImage imageNamed:@"squarePNG"] retain];
 	NSDictionary *detectorOptions = [[NSDictionary alloc] initWithObjectsAndKeys:CIDetectorAccuracyLow, CIDetectorAccuracy, nil];
@@ -673,12 +737,42 @@ bail:
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     MKCoordinateSpan span = _mapView.region.span;
     MKCoordinateRegion region = _mapView.region;
-    float x1=region.center.longitude-span.longitudeDelta/2;
-    float y1=region.center.latitude-span.latitudeDelta/2;
-    float x2=region.center.longitude+span.longitudeDelta/2;
-    float y2=region.center.latitude+span.latitudeDelta/2;
+    float lat1=region.center.latitude-span.latitudeDelta/2;
+    float lat2=region.center.latitude+span.latitudeDelta/2;
+    float long1=region.center.longitude-span.latitudeDelta/2;
+    float long2=region.center.longitude+span.latitudeDelta/2;
+    NSArray *annotations = _mapView.annotations;
+    NSArray *data = [LocationInfo sharedInfo].OBSLocations;
+    for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
+        NSDictionary *temp = [data objectAtIndex:i];
+        BOOL onMap=NO;
+        float lat = [[temp objectForKey:@"lat"] floatValue];
+        float longt = [[temp objectForKey:@"longt"] floatValue];
+        for (NSUInteger j=0; j<[annotations count]; j++) {
+            Annotation *annot = [annotations objectAtIndex:j];
+            
+            if(annot.coordinate.latitude==lat&&
+               annot.coordinate.longitude==longt){
+                onMap=YES;
+                break;
+            }
+        }
+        if(lat>lat1&&lat<lat2&&longt>long1&&longt<long2&&isLocated&&!onMap){
+        
+        
+        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
+        NSURL *url = [NSURL URLWithString:temp1];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        //[request startAsynchronous];
+        [request setDelegate:self];
+        [[self queue] addOperation:request];
+            
+        }
+    }
+
+
     
-//    NSLog(@"Map View Span: (%f, %f)->(%f, %f)",x1,y1,x2,y2);
 }
 
 - (void)viewDidUnload
