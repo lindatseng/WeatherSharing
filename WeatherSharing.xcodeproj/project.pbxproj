@@ -52,6 +52,9 @@
 		BFF0AD8114C2F918001D420B /* cold.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD7E14C2F918001D420B /* cold.png */; };
 		BFF0AD8214C2F918001D420B /* hot.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD7F14C2F918001D420B /* hot.png */; };
 		BFF0AD8314C2F918001D420B /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD8014C2F918001D420B /* normal.png */; };
+		BFF0AD8914C30135001D420B /* Cloudy.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD8614C30135001D420B /* Cloudy.png */; };
+		BFF0AD8A14C30135001D420B /* Rainy.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD8714C30135001D420B /* Rainy.png */; };
+		BFF0AD8B14C30135001D420B /* Sunny.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF0AD8814C30135001D420B /* Sunny.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +127,9 @@
 		BFF0AD7E14C2F918001D420B /* cold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cold.png; sourceTree = "<group>"; };
 		BFF0AD7F14C2F918001D420B /* hot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot.png; sourceTree = "<group>"; };
 		BFF0AD8014C2F918001D420B /* normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal.png; sourceTree = "<group>"; };
+		BFF0AD8614C30135001D420B /* Cloudy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cloudy.png; sourceTree = "<group>"; };
+		BFF0AD8714C30135001D420B /* Rainy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rainy.png; sourceTree = "<group>"; };
+		BFF0AD8814C30135001D420B /* Sunny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sunny.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +241,7 @@
 		BFDAB76914AED753009BDCAC /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				BFF0AD8514C30135001D420B /* type */,
 				BFF0AD7D14C2F918001D420B /* temperature */,
 				BFDAB76A14AED753009BDCAC /* temp */,
 			);
@@ -291,6 +298,16 @@
 				BFF0AD8014C2F918001D420B /* normal.png */,
 			);
 			path = temperature;
+			sourceTree = "<group>";
+		};
+		BFF0AD8514C30135001D420B /* type */ = {
+			isa = PBXGroup;
+			children = (
+				BFF0AD8614C30135001D420B /* Cloudy.png */,
+				BFF0AD8714C30135001D420B /* Rainy.png */,
+				BFF0AD8814C30135001D420B /* Sunny.png */,
+			);
+			path = type;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,6 +371,9 @@
 				BFF0AD8114C2F918001D420B /* cold.png in Resources */,
 				BFF0AD8214C2F918001D420B /* hot.png in Resources */,
 				BFF0AD8314C2F918001D420B /* normal.png in Resources */,
+				BFF0AD8914C30135001D420B /* Cloudy.png in Resources */,
+				BFF0AD8A14C30135001D420B /* Rainy.png in Resources */,
+				BFF0AD8B14C30135001D420B /* Sunny.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
