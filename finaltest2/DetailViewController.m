@@ -593,8 +593,11 @@ bail:
     
     if ([result isKindOfClass:[NSDictionary class]]) {
         NSLog(@"dictionary");
+        
         NSDictionary *temp1 = [response objectFromJSONString];
         NSDictionary *data = [temp1 objectForKey:@"result"];
+        
+        
         NSString *locationName = [data objectForKey:@"locationName"];
         NSString *description = [data objectForKey:@"description"];
         float longitude = [[LocationInfo sharedInfo] longitudeForLocation:locationName];
@@ -610,22 +613,56 @@ bail:
         
         
         
-        //data from suitingweather.appspot.com
+        //data from suitingweather.appspot.com 中央氣象局
     }
     else if([result isKindOfClass:[NSArray class]]){
         NSLog(@"array");
         //userFeedback=result;
-        //data from sharemyweather.appspot.com
+        //data from sharemyweather.appspot.com 使用者回報
         for (NSUInteger i=0; i<[result count]; i++) {
             NSLog(@"%d",i);
             NSDictionary *data = [result objectAtIndex:i];
+            
+            NSString *date= [data objectForKey:@"date"];
+            NSString *tmp1=[date substringFromIndex:11];
+            int hour=[[tmp1 substringToIndex:2] intValue];
+            int minute= [[[tmp1 substringFromIndex:3] substringToIndex:2]intValue];
+            hour=(hour+8)%24;
+            NSString *description;
+            
             float longitude =[[data objectForKey:@"lng"] floatValue];
             float latitude = [[data objectForKey:@"lat"] floatValue];
             int weatherType = [[data objectForKey:@"weatherType"] intValue];
             int temperatureType = [[data objectForKey:@"temper"] intValue];
             CLLocationCoordinate2D coordinate = {latitude,longitude};
-            Annotation *annotation =[[Annotation alloc]initWithTitle: [NSString stringWithFormat:@"Somewhere"]
-                                                            subTitle: [NSString stringWithFormat:@"%d,%d",weatherType,temperatureType]
+            
+            if (temperatureType==Cold) {
+                description=[[NSString alloc]initWithFormat:@"Cold and "];
+            }
+            else if(temperatureType==Normal){
+                description=[[NSString alloc]initWithFormat:@"Normal and "];
+            }
+            else if(temperatureType==Hot){
+                description=[[NSString alloc]initWithFormat:@"Hot and "];
+            }
+            else {
+                description=[[NSString alloc]initWithFormat:@""];
+            }
+            
+            if (weatherType==Rainy) {
+                description= [description stringByAppendingString:@"Rainy"];
+            }
+            else if(weatherType==Cloudy){
+                description= [description stringByAppendingString:@"Cloudy"];
+            }
+            else if(weatherType==Sunny){
+                description= [description stringByAppendingString:@"Sunny"];
+            }
+            else {
+                
+            }
+            Annotation *annotation =[[Annotation alloc]initWithTitle: [NSString stringWithFormat:@"%02d:%02d",hour,minute]
+                                                            subTitle: description
                                                        andCoordinate:coordinate
                                                         andWeather:weatherType andTemperature:temperatureType];
             //NSLog(@"%f,%f,%@,%@",longitude,latitude,weatherType,temperatureType);
@@ -644,7 +681,7 @@ bail:
 
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation{
-    NSLog(@"mapView");
+    
     static NSString *sunnyIdentifier=@"sunny";
     static NSString *cloudyIdentifier=@"cloudy";
     static NSString *rainyIdentifier=@"rainy";
@@ -661,39 +698,39 @@ bail:
         
         
         switch (anno.weatherState) {
-            case Sunny:{NSLog(@"sunny");
+            case Sunny:{
                 annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:sunnyIdentifier];
             }
                 break;
-            case Cloudy:{NSLog(@"cloudy");
+            case Cloudy:{
                 annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:cloudyIdentifier];
             }
                 break;
-            case Rainy:{NSLog(@"rainy");
+            case Rainy:{
                 annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:rainyIdentifier];
             }
                 break;
             default:
-                NSLog(@"defaulttt");
+                
                 break;
         }
         }
         else if(currentView==temperature){
             switch (anno.temperatureState) {
-                case Cold:{NSLog(@"cold");
+                case Cold:{
                     annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:coldIdentifier];
                 }
                     break;
-                case Hot:{NSLog(@"hot");
+                case Hot:{
                     annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:hotIdentifier];
                 }
                     break;
-                case Normal:{NSLog(@"normal");
+                case Normal:{
                     annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:normalIdentifier];
                 }
                     break;
                 default:
-                    NSLog(@"defaulttt");
+                    
                     break;
             }
         }
@@ -709,24 +746,23 @@ bail:
                 case Sunny:{
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:sunnyIdentifier];
                     
-                    annotationView.image=[UIImage imageNamed:@""];
+                    annotationView.image=[UIImage imageNamed:@"Sunny.png"];
                 }
                     break;
                 case Cloudy:{
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:cloudyIdentifier];
-                    annotationView.image=[UIImage imageNamed:@""];
+                    annotationView.image=[UIImage imageNamed:@"Cloudy.png"];
                 }
                     break;
                 case Rainy:{
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
-                    annotationView.image=[UIImage imageNamed:@""];
+                    annotationView.image=[UIImage imageNamed:@"Rainy.png"];
                 }
                     break;
                 default:
                     //annotationView=nil;
-                    NSLog(@"default");
                     annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
-                    annotationView.image=[UIImage imageNamed:@"normal.png"];
+                    //annotationView.image=[UIImage imageNamed:@"normal.png"];
                     break;
             }
             annotationView.canShowCallout=YES;
@@ -752,9 +788,8 @@ bail:
                         break;
                     default:
                         //annotationView=nil;
-                        NSLog(@"default");
                         annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:rainyIdentifier];
-                        annotationView.image=[UIImage imageNamed:@"normal.png"];
+                        //annotationView.image=[UIImage imageNamed:@"normal.png"];
                         break;
                 }
                 annotationView.canShowCallout=YES;

@@ -136,9 +136,11 @@
     if (!self.detailViewController) {
         self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
     }
+    if(control1.selectedSegmentIndex!=-1&&control2.selectedSegmentIndex!=-1){
     [self.navigationController pushViewController:self.detailViewController animated:YES];
     
     [self uploadData];
+    }
     
 }
 
