@@ -17,7 +17,7 @@
 @implementation MasterViewController
 
 @synthesize detailViewController = _detailViewController;
-@synthesize startButton = _startButton3;
+@synthesize startButton;
 @synthesize control1;
 @synthesize control2;
 
@@ -59,9 +59,13 @@
     locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
-
-	// Do any additional setup after loading the view, typically from a nib.
+    [startButton setBackgroundColor:[UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:202.0/255.0 alpha:1]];
     
+//    startButton.titleLabel.backgroundColor=[UIColor redColor];
+	// Do any additional setup after loading the view, typically from a nib.
+    [[startButton layer] setCornerRadius:8.0f];
+    [[startButton layer] setMasksToBounds:YES];
+    [[startButton layer] setBorderWidth:1.0f];
 }
 
 - (void)viewDidUnload

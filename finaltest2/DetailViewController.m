@@ -622,7 +622,7 @@ bail:
         //userFeedback=result;
         //data from sharemyweather.appspot.com 使用者回報
         for (NSUInteger i=0; i<[result count]; i++) {
-            NSLog(@"%d",i);
+            
             NSDictionary *data = [result objectAtIndex:i];
             
             NSString *date= [data objectForKey:@"date"];
@@ -671,6 +671,7 @@ bail:
             [userFeedback addObject:annotation];
             if (currentView==weather||currentView==temperature) {
                 [_mapView addAnnotation:annotation];
+                NSLog(@"123");
             }
             
         }
@@ -694,11 +695,11 @@ bail:
     static NSString *normalIdentifier=@"normal";
     static NSString *hotIdentifier=@"hot";
     static NSString *cwbIdentifier=@"cwb";
-    if([annotation isKindOfClass:[Annotation class]]){NSLog(@"if1");
+    if([annotation isKindOfClass:[Annotation class]]){
         //Try to get an unused annotation, similar to uitableviewcells
         Annotation *anno=annotation;
         MKAnnotationView *annotationView=nil;
-        NSLog(@"%d",anno.weatherState);
+        
         if (currentView==weather) {
         
         
@@ -745,7 +746,7 @@ bail:
         }
         //If one isn't available, create a new one
         if(!annotationView){
-            NSLog(@"if2");
+            
             if (currentView==weather) {
             switch (anno.weatherState) {
                     
@@ -826,13 +827,14 @@ bail:
     [locationManager startUpdatingLocation];
     userFeedback = [[NSMutableArray alloc]initWithCapacity:0];
     obsInfo = [[NSMutableArray alloc]initWithCapacity:0];
-    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 372)];
     _mapView.delegate=self;
     _mapView.showsUserLocation=YES;
     [self.view addSubview:_mapView];
     isLocated = NO;
     isDetectingFace = NO;
     currentView=temperature;
+    self.title=@"Temperature";
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.toolbarHidden=NO;
     UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face Off"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
@@ -843,12 +845,21 @@ bail:
     [self setToolbarItems:items];
     
     
-    UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Temperature" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+    UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Weather" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
     self.navigationItem.rightBarButtonItem=d;
+    //self.navigationItem.leftBarButtonItem=nil;
+    [self.navigationItem setHidesBackButton:YES];
     if (![self queue]) {
         [self setQueue:[[[NSOperationQueue alloc] init] autorelease]];
     }
     queue.maxConcurrentOperationCount=1;
+    
+    NSString *temp1 = [NSString stringWithFormat:@"http://sharemyweather.appspot.com/download"];
+    NSURL *url = [NSURL URLWithString:temp1];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDelegate:self];
+    [[self queue] addOperation:request];
+
     
     for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
         NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
@@ -860,12 +871,7 @@ bail:
         [[self queue] addOperation:request];
     }
     
-    NSString *temp1 = [NSString stringWithFormat:@"http://sharemyweather.appspot.com/download"];
-    NSURL *url = [NSURL URLWithString:temp1];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setDelegate:self];
-    [[self queue] addOperation:request];
-    
+        
     
     
     detectFaces = YES;
@@ -900,9 +906,10 @@ bail:
 -(void)changeCurrentView{
     switch (currentView) {
         case temperature:{
-            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Weather" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"CWB" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
             self.navigationItem.rightBarButtonItem=d;
             currentView=weather;
+            self.title=@"Weather";
             [_mapView removeAnnotations:_mapView.annotations];
             for (NSUInteger i=0;i<[userFeedback count]; i++) {
                 [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
@@ -910,9 +917,10 @@ bail:
         }
             break;
         case weather:{
-            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"cwb" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Temperature" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
             self.navigationItem.rightBarButtonItem=d;
             currentView=cwb;
+            self.title=@"CWB";
             [_mapView removeAnnotations:_mapView.annotations];
             for (NSUInteger i=0;i<[obsInfo count]; i++) {
                 [_mapView addAnnotation:[obsInfo objectAtIndex:i]];
@@ -920,9 +928,11 @@ bail:
         }
             break;
         case cwb:{
-            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Temperature" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
+            UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Weather" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
             self.navigationItem.rightBarButtonItem=d;
+            self.navigationItem.leftBarButtonItem=nil;
             currentView=temperature;
+            self.title=@"temperature";
             [_mapView removeAnnotations:_mapView.annotations];
             for (NSUInteger i=0;i<[userFeedback count]; i++) {
                 [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
@@ -945,8 +955,8 @@ bail:
         region.center.latitude = mylat;
         region.center.longitude = mylng;
         MKCoordinateSpan span;
-        span.latitudeDelta = .2;
-        span.longitudeDelta = .2;
+        span.latitudeDelta = .02;
+        span.longitudeDelta = .02;
         region.span = span;
         [_mapView setRegion:region animated:YES];
         isLocated = YES;
@@ -1015,7 +1025,7 @@ bail:
 //    [uploadrequest setPostValue:@"5" forKey:@"weatherType"];
 //    [uploadrequest startSynchronous];
 //    NSString *rrr = [uploadrequest responseString];
-    //NSLog(@"%@",rrr);
+    //      og(@"%@",rrr);
 }
 
 - (void)viewDidAppear:(BOOL)animated
