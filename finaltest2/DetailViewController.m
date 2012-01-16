@@ -597,17 +597,19 @@ bail:
         NSDictionary *temp1 = [response objectFromJSONString];
         NSDictionary *data = [temp1 objectForKey:@"result"];
         
-        
+        NSString *temperature = [data objectForKey:@"temperature"];
         NSString *locationName = [data objectForKey:@"locationName"];
         NSString *description = [data objectForKey:@"description"];
         float longitude = [[LocationInfo sharedInfo] longitudeForLocation:locationName];
         float latitude = [[LocationInfo sharedInfo] latitudeForLocation:locationName];
         CLLocationCoordinate2D coordinate = {latitude,longitude};
-        Annotation *annotation =[[Annotation alloc]initWithTitle:locationName subTitle:description andCoordinate:coordinate];
+        Annotation *annotation =[[Annotation alloc]initWithTitle:[NSString stringWithFormat:@"%@(%@)",locationName,temperature] subTitle:description andCoordinate:coordinate andWeather:4 andTemperature:4];
         
-        [_mapView addAnnotation:annotation];
+        [obsInfo addObject:annotation];
        
-        
+        if (currentView==cwb) {
+            [_mapView addAnnotation:annotation];
+        }
         
         
         
@@ -667,7 +669,10 @@ bail:
                                                         andWeather:weatherType andTemperature:temperatureType];
             //NSLog(@"%f,%f,%@,%@",longitude,latitude,weatherType,temperatureType);
             [userFeedback addObject:annotation];
-            [_mapView addAnnotation:annotation];
+            if (currentView==weather||currentView==temperature) {
+                [_mapView addAnnotation:annotation];
+            }
+            
         }
         
         
@@ -736,6 +741,7 @@ bail:
         }
         else{
             annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:cwbIdentifier];
+            
         }
         //If one isn't available, create a new one
         if(!annotationView){
@@ -765,7 +771,7 @@ bail:
                     //annotationView.image=[UIImage imageNamed:@"normal.png"];
                     break;
             }
-            annotationView.canShowCallout=YES;
+            
             }
             else if(currentView==temperature){
                 switch (anno.temperatureState) {
@@ -792,14 +798,15 @@ bail:
                         //annotationView.image=[UIImage imageNamed:@"normal.png"];
                         break;
                 }
-                annotationView.canShowCallout=YES;
+                ;
             }
             else{
                 annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:
                                 cwbIdentifier];
                 
-                annotationView.image=[UIImage imageNamed:@""];
+                annotationView.image=[UIImage imageNamed:@"cwb.png"];
             }
+            annotationView.canShowCallout=YES;
         }
         return annotationView;
     }
@@ -818,8 +825,10 @@ bail:
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
     userFeedback = [[NSMutableArray alloc]initWithCapacity:0];
+    obsInfo = [[NSMutableArray alloc]initWithCapacity:0];
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     _mapView.delegate=self;
+    _mapView.showsUserLocation=YES;
     [self.view addSubview:_mapView];
     isLocated = NO;
     isDetectingFace = NO;
@@ -841,15 +850,15 @@ bail:
     }
     queue.maxConcurrentOperationCount=1;
     
-//    for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
-//        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
-//                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
-//        NSURL *url = [NSURL URLWithString:temp1];
-//        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//        //[request startAsynchronous];
-//        [request setDelegate:self];
-//        [[self queue] addOperation:request];
-//    }
+    for(NSUInteger i=0;i<[[LocationInfo sharedInfo].OBSLocations count];i++){
+        NSString *temp1 = [NSString stringWithFormat:@"http://suitingweather.appspot.com/obs?location=%@&output=json",
+                           [[[LocationInfo sharedInfo].OBSLocations objectAtIndex:i]objectForKey:@"identifier"]];
+        NSURL *url = [NSURL URLWithString:temp1];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        //[request startAsynchronous];
+        [request setDelegate:self];
+        [[self queue] addOperation:request];
+    }
     
     NSString *temp1 = [NSString stringWithFormat:@"http://sharemyweather.appspot.com/download"];
     NSURL *url = [NSURL URLWithString:temp1];
@@ -905,8 +914,8 @@ bail:
             self.navigationItem.rightBarButtonItem=d;
             currentView=cwb;
             [_mapView removeAnnotations:_mapView.annotations];
-            for (NSUInteger i=0;i<[userFeedback count]; i++) {
-                [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
+            for (NSUInteger i=0;i<[obsInfo count]; i++) {
+                [_mapView addAnnotation:[obsInfo objectAtIndex:i]];
             }
         }
             break;
@@ -1027,11 +1036,12 @@ bail:
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+//    } else {
+//        return YES;
+//    }
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
