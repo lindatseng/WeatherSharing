@@ -12,6 +12,7 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import <AVFoundation/AVFoundation.h>
+#import "TutorialViewController.h"
 @interface DetailViewController : UIViewController 
 <CLLocationManagerDelegate,
 ASIHTTPRequestDelegate,
@@ -29,7 +30,7 @@ AVCaptureVideoDataOutputSampleBufferDelegate>{
     NSMutableArray *userFeedback;
   //  IBOutlet UIButton *testButton;
     NSOperationQueue *queue;
-    
+    TutorialViewController *tutorialViewController;
     AVCaptureVideoPreviewLayer *previewLayer;
 	AVCaptureVideoDataOutput *videoDataOutput;
 	BOOL detectFaces;
@@ -50,7 +51,7 @@ AVCaptureVideoDataOutputSampleBufferDelegate>{
 @property (nonatomic, retain) NSMutableArray *userFeedback;
 @property (nonatomic, retain) NSOperationQueue *queue;
 @property (nonatomic) int currentView;
-
+@property (nonatomic, retain) TutorialViewController *tutorialViewController;
 @end
 
 

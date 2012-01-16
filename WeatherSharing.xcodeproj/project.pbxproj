@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22957D2614C4439C000242F8 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22957D2514C4439C000242F8 /* TutorialViewController.m */; };
+		22957D2814C443C2000242F8 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22957D2714C443C2000242F8 /* TutorialViewController.xib */; };
 		8411FC4B14B0494800A1396B /* LocationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411FC4A14B0494700A1396B /* LocationInfo.m */; };
 		843AD08414AB0CDE00CD54CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08314AB0CDE00CD54CA /* UIKit.framework */; };
 		843AD08614AB0CDE00CD54CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843AD08514AB0CDE00CD54CA /* Foundation.framework */; };
@@ -67,6 +69,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22957D2414C4439C000242F8 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		22957D2514C4439C000242F8 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		22957D2714C443C2000242F8 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
 		8411FC4914B0494700A1396B /* LocationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationInfo.h; sourceTree = "<group>"; };
 		8411FC4A14B0494700A1396B /* LocationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationInfo.m; sourceTree = "<group>"; };
 		843AD07F14AB0CDE00CD54CA /* UserWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,12 +233,15 @@
 				843AD09614AB0CDE00CD54CA /* MasterViewController.m */,
 				843AD09814AB0CDE00CD54CA /* DetailViewController.h */,
 				843AD09914AB0CDE00CD54CA /* DetailViewController.m */,
+				22957D2414C4439C000242F8 /* TutorialViewController.h */,
+				22957D2514C4439C000242F8 /* TutorialViewController.m */,
 				BFDAB77714AF0DD4009BDCAC /* UrlFetcher.h */,
 				BFDAB77814AF0DD4009BDCAC /* UrlFetcher.m */,
 				843AD09B14AB0CDE00CD54CA /* MasterViewController_iPhone.xib */,
 				843AD09E14AB0CDE00CD54CA /* MasterViewController_iPad.xib */,
 				843AD0A114AB0CDE00CD54CA /* DetailViewController_iPhone.xib */,
 				843AD0A414AB0CDE00CD54CA /* DetailViewController_iPad.xib */,
+				22957D2714C443C2000242F8 /* TutorialViewController.xib */,
 				BFDAB77414AF07B9009BDCAC /* JSONKit.h */,
 				BFDAB77514AF07B9009BDCAC /* JSONKit.m */,
 				843AD08A14AB0CDE00CD54CA /* Supporting Files */,
@@ -418,6 +426,7 @@
 				BFF0AD9A14C32007001D420B /* icon-small-50.png in Resources */,
 				BF6698BF14C3C58A0016585D /* cwb.png in Resources */,
 				BF9961F014C43DF600C6C673 /* home.png in Resources */,
+				22957D2814C443C2000242F8 /* TutorialViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +455,7 @@
 				BFDAB84C14AF655D009BDCAC /* Reachability.m in Sources */,
 				BFDAB84D14AF655D009BDCAC /* ReachabilityAppDelegate.m in Sources */,
 				8411FC4B14B0494800A1396B /* LocationInfo.m in Sources */,
+				22957D2614C4439C000242F8 /* TutorialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

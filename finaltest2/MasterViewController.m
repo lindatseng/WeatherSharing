@@ -145,6 +145,9 @@
     [self.navigationController pushViewController:self.detailViewController animated:YES];
     
     [self uploadData];
+//        self.detailViewController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//        [self presentModalViewController:self.detailViewController animated:YES];
+    
     }
     
 }

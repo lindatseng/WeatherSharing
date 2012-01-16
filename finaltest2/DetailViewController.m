@@ -108,7 +108,9 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
     BOOL isDetectingFace;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+- (void) uploadData;
 -(void)myPosition;
+-(void)showTutorial;
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
 - (void)drawFaceBoxesForFeatures:(NSArray *)features forVideoBox:(CGRect)clap orientation:(UIDeviceOrientation)orientation;
@@ -124,6 +126,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size)
 @synthesize userFeedback;
 @synthesize queue;
 @synthesize currentView;
+@synthesize tutorialViewController;
 - (void)dealloc
 {
     [_masterPopoverController release];
@@ -558,7 +561,7 @@ bail:
 -(void)setFaceSwitch{
     
     if(isDetectingFace){
-        UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face OFF"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
+        UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face ON"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
         UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
 
@@ -567,7 +570,7 @@ bail:
         isDetectingFace=!isDetectingFace;
     }
     else{
-        UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face ON"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
+        UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face OFF"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
         UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
 
@@ -837,16 +840,20 @@ bail:
     self.title=@"Temperature";
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.toolbarHidden=NO;
-    UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face Off"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
+    UIBarButtonItem *c = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Face ON"] style:UIBarButtonItemStyleBordered target:self action:@selector(setFaceSwitch)];
     
     UIBarButtonItem *a= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(myPosition)];
+    UIBarButtonItem *b= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPageCurl target:self action:@selector(showTutorial)];
     NSArray *items = [[NSArray alloc]initWithObjects:c,a,b, nil];
     [self setToolbarItems:items];
     
     
     UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Weather" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
-    self.navigationItem.rightBarButtonItem=d;
+    self.navigationItem.leftBarButtonItem=d;
+    
+    UIBarButtonItem *e = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(myPosition)];
+    self.navigationItem.rightBarButtonItem=e;
+    
     //self.navigationItem.leftBarButtonItem=nil;
     [self.navigationItem setHidesBackButton:YES];
     if (![self queue]) {
@@ -904,10 +911,17 @@ bail:
 
 }
 -(void)changeCurrentView{
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:1];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.view cache:YES];
+//    [UIView commitAnimations];
+//    self.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//    [self presentModalViewController:self animated:YES];
+    
     switch (currentView) {
         case temperature:{
             UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"CWB" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
-            self.navigationItem.rightBarButtonItem=d;
+            self.navigationItem.leftBarButtonItem=d;
             currentView=weather;
             self.title=@"Weather";
             [_mapView removeAnnotations:_mapView.annotations];
@@ -918,7 +932,7 @@ bail:
             break;
         case weather:{
             UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Temperature" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
-            self.navigationItem.rightBarButtonItem=d;
+            self.navigationItem.leftBarButtonItem=d;
             currentView=cwb;
             self.title=@"CWB";
             [_mapView removeAnnotations:_mapView.annotations];
@@ -929,10 +943,10 @@ bail:
             break;
         case cwb:{
             UIBarButtonItem *d = [[UIBarButtonItem alloc]initWithTitle:@"Weather" style:UIBarButtonItemStyleBordered target:self action:@selector(changeCurrentView)];
-            self.navigationItem.rightBarButtonItem=d;
-            self.navigationItem.leftBarButtonItem=nil;
+            self.navigationItem.leftBarButtonItem=d;
+            
             currentView=temperature;
-            self.title=@"temperature";
+            self.title=@"Temperature";
             [_mapView removeAnnotations:_mapView.annotations];
             for (NSUInteger i=0;i<[userFeedback count]; i++) {
                 [_mapView addAnnotation:[userFeedback objectAtIndex:i]];
@@ -1089,5 +1103,16 @@ bail:
     
     
     [_mapView setRegion:region animated:YES];
+    
+
 }
+
+-(void)showTutorial{
+    self.tutorialViewController = [[TutorialViewController alloc]init];
+    self.tutorialViewController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+    [self presentModalViewController:self.tutorialViewController animated:YES];
+    
+
+}
+
 @end
