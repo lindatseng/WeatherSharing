@@ -74,7 +74,7 @@
 		22957D2714C443C2000242F8 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
 		8411FC4914B0494700A1396B /* LocationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationInfo.h; sourceTree = "<group>"; };
 		8411FC4A14B0494700A1396B /* LocationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationInfo.m; sourceTree = "<group>"; };
-		843AD07F14AB0CDE00CD54CA /* UserWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		843AD07F14AB0CDE00CD54CA /* WTF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WTF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843AD08314AB0CDE00CD54CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		843AD08514AB0CDE00CD54CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		843AD08714AB0CDE00CD54CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -196,7 +196,7 @@
 		843AD08014AB0CDE00CD54CA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				843AD07F14AB0CDE00CD54CA /* UserWeather.app */,
+				843AD07F14AB0CDE00CD54CA /* WTF.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -370,7 +370,7 @@
 			);
 			name = WeatherSharing;
 			productName = finaltest2;
-			productReference = 843AD07F14AB0CDE00CD54CA /* UserWeather.app */;
+			productReference = 843AD07F14AB0CDE00CD54CA /* WTF.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -563,7 +563,7 @@
 				INFOPLIST_FILE = "finaltest2/WeatherSharing-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = /usr/lib/libz.dylib;
-				PRODUCT_NAME = UserWeather;
+				PRODUCT_NAME = WTF;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -581,7 +581,7 @@
 				INFOPLIST_FILE = "finaltest2/WeatherSharing-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = /usr/lib/libz.dylib;
-				PRODUCT_NAME = UserWeather;
+				PRODUCT_NAME = WTF;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
